@@ -27,6 +27,9 @@ def get_installed_plugins():
 
 
 def call_plugin(module, app_name, app_params):
+	# if not module.cb_test():
+	# 	click.echo("Cloudn't use plugin {}".format(app_name))
+	# 	exit()
 	module.cb_start(app_params)
 
 
@@ -40,10 +43,15 @@ def run_config(config):
 
 		click.echo("Starting {}...".format(app_name))
 		click.echo("\tParams {}...".format(app_params))
+
+		# Iterate all the plugins and choose the correct one
 		for importer, name, _ in pkgutil.iter_modules(plugins.__path__):
+			if name != app_name:
+				continue
 			m = importlib.import_module(plugins.__name__ + '.' + name + '.main')
-			print(m)
 			call_plugin(m, app_name, app_params)
+			break
+
 
 
 

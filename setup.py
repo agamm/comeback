@@ -11,6 +11,6 @@ setup(
         'pyyaml'
     ],
     entry_points={
-        'console_scripts': ['comeback=src.main:cli'],
+        'console_scripts': ['comeback=comeback.main:cli'],
     },
 )
