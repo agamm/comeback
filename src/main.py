@@ -3,6 +3,7 @@ import os, sys
 import yaml
 from . import plugins
 import pkgutil
+import importlib
 
 def exit():
 	sys.exit()
@@ -22,25 +23,27 @@ def get_probable_project_name():
 
 
 def get_installed_plugins():
-	return [name for _, name, _ in pkgutil.iter_modules(['plugins'])]
+	return [name for _, name, _ in pkgutil.iter_modules(plugins.__path__)]
 
 
-def call_plugin(app_name, app_params):
-	plugins[app_name].cb_start(app_params)
+def call_plugin(module, app_name, app_params):
+	module.cb_start(app_params)
 
 
 def run_config(config):
-	for app in config:
-		app_name = next(iter(app))
-
+	for app_name, app_params in config.items():
+		
 		if app_name not in get_installed_plugins():
+			print(get_installed_plugins())
 			click.echo("No plugin found for {}".format(app_name))
 			exit()
 
-		app_params = app[app_name]
 		click.echo("Starting {}...".format(app_name))
 		click.echo("\tParams {}...".format(app_params))
-		call_plugin(app_name, app_params)
+		for importer, name, _ in pkgutil.iter_modules(plugins.__path__):
+			m = importlib.import_module(plugins.__name__ + '.' + name + '.main')
+			print(m)
+			call_plugin(m, app_name, app_params)
 
 
 

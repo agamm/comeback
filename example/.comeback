@@ -1,4 +1,4 @@
-- vscode: 
+vscode: 
   cwd: ~/dev/myproject
-- chrome:
+chrome:
   url: localhost:8080

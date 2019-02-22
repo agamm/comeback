@@ -1,3 +1,4 @@
+import os
 import subprocess 
 
 
@@ -12,4 +13,5 @@ def cb_test():
 
 
 def cb_start(options):
-	subprocess.call('code', cwd=options['cwd'], shell=True)
+	cwd = os.path.expanduser(options['cwd'])
+	subprocess.call('code {cmd}'.format(cmd=cwd), shell=True)
