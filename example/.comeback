@@ -1,3 +1,4 @@
-- {vscode: ~/dev/myproject}
+- vscode: 
+  - cwd: ~/dev/myproject
 - chrome:
-  - localhost:8080
+  - url: localhost:8080
