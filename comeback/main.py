@@ -33,16 +33,17 @@ def call_plugin(module, app_name, app_params):
 	module.cb_start(app_params)
 
 
-def run_config(config):
+def run_config(config, verbose=False):
 	for app_name, app_params in config.items():
 		
 		if app_name not in get_installed_plugins():
-			print(get_installed_plugins())
+			click.echo("Installed plugins: {}".format(",".join(get_installed_plugins())))
 			click.echo("No plugin found for {}".format(app_name))
 			exit()
 
-		click.echo("Starting {}...".format(app_name))
-		click.echo("\tParams {}...".format(app_params))
+		if verbose:
+			click.echo("Starting {}...".format(app_name))
+			click.echo("\tParams {}...".format(app_params))
 
 		# Iterate all the plugins and choose the correct one
 		for importer, name, _ in pkgutil.iter_modules(plugins.__path__):
@@ -63,7 +64,7 @@ def load_config(verbose):
 	conf_path = os.path.join(cwd, ".comeback")
 	with open(conf_path, 'r') as fd:
 		try:
-			run_config(yaml.load(fd))
+			run_config(yaml.load(fd), verbose)
 		except yaml.YAMLError as exc:
 			click.echo(exc)
 

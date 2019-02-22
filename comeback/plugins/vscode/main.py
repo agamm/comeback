@@ -13,6 +13,5 @@ def cb_test():
 
 
 def cb_start(options):
-	print(options)
 	cwd = os.path.expanduser(options['cwd'])
 	subprocess.call('code {cmd}'.format(cmd=cwd), shell=True)
