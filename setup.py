@@ -7,7 +7,8 @@ setup(
     py_modules=['src'],
     license="MIT",
     install_requires=[
-        'Click',
+        'click',
+        'pyyaml'
     ],
     entry_points={
         'console_scripts': ['comeback=src.main:cli'],
