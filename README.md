@@ -63,6 +63,7 @@ chrome:
  - Make os commands easier to use in plugins
  - Open programs in an async fashion, why wait?
  - Tests, tests and tests.
+ - Add the ability to run globally and choose which project.
  
 ### Contributing
 See the `CONTRIBUTING.md` file
