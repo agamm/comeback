@@ -1,17 +1,17 @@
 import os
-import subprocess 
+import subprocess
 
 
 def cb_test():
-	"""
-		Test if we can use this plugin
-	"""
-	try:
-		subprocess.call(["code --help"])
-	except OSError as e:
-		return False
+    """
+        Test if we can use this plugin
+    """
+    try:
+        subprocess.call(["code --help"])
+    except OSError as e:
+        return False
 
 
 def cb_start(options):
-	cwd = os.path.expanduser(options['cwd'])
-	subprocess.call('code {cmd}'.format(cmd=cwd), shell=True)
+    cwd = os.path.expanduser(options['cwd'])
+    subprocess.call('code {cmd}'.format(cmd=cwd), shell=True)

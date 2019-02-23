@@ -1,6 +1,5 @@
 from setuptools import setup
 
-
 setup(
     name='comeback',
     version='0.0.1',
