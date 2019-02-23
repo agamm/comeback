@@ -3,31 +3,30 @@ import subprocess
 from comeback import utils
 
 
-def cb_test():
+def cb_test(options):
     """
         Test if we can use this plugin
     """
-    # platform = utils.get_platform()
-    # try:
-    # 	if platform == "windows":
-    # 		subprocess.call(["chrome --help"])
-    # 	elif platform == "linux":
+    if 'url' not in options:
+        return False, 'URL parameter is not set.'
 
-    # 	elif platform == "mac":
+    if not utils.module_exists('webbrowser'):
+        return False, 'webbrowser module doesn\'t exist!'
 
-    # except OSError as e:
-    # 	return False
     return True
 
 
 def cb_start(options):
-    platform = utils.get_platform()
-    if platform == "windows":
-        utils.open(["cmd", "/c", "start chrome {}".format(options["url"])])
-    elif platform == "linux":
+    import webbrowser
+    new = 2  # open in a new tab
+    try:
+        webbrowser.get(using='google-chrome').open(options['url'], new=new)
+    except webbrowser.Error:
         pass
-    elif platform == "mac":
-        pass
-# cwd = os.path.expanduser(options['cwd'])
-# subprocess.call('code {cmd}'.format(cmd=cwd), shell=True)
-# start chrome "site1.com"
+
+    # Try to open again, and if it doesn't work open the default
+    try:
+        webbrowser.get(using='chrome').open(options['url'], new=new)
+    except webbrowser.Error:
+        webbrowser.open(options['url'], new=new)
+
