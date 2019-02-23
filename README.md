@@ -25,7 +25,11 @@ chrome:
 `pipenv install -e .`  
 `comeback --help`  
 `cd example`
-`comeback # and see the magic`
+`comeback # and see the magic`  
+or Install globally via pip  
+`pip install -e /path/to/comeback`  
+(the directory must have the setup.py file in it)  
+*Later it would be installed normally with pip install comeback*
 
 ### Why not bash/batch?
 - It isn't cross-platform.
