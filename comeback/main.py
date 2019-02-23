@@ -30,9 +30,10 @@ def get_installed_plugins():
 
 
 def call_plugin(module, app_name, app_params):
-    # if not module.cb_test():
-    # 	click.echo("Cloudn't use plugin {}".format(app_name))
-    # 	exit()
+    check, err = module.cb_test(app_params)
+    if not check:
+        click.echo("Cloudn't use plugin {name}, {err}".format(name=app_name, err=err))
+        exit()
     module.cb_start(app_params)
 
 

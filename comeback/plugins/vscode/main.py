@@ -1,15 +1,19 @@
 import os
 import subprocess
+from comeback import utils
 
 
-def cb_test():
+def cb_test(options):
     """
         Test if we can use this plugin
     """
-    try:
-        subprocess.call(["code --help"])
-    except OSError as e:
-        return False
+    if 'cwd' not in options:
+        return False, 'URL parameter is not set.'
+
+    if not utils.binary_exists("code"):
+        return False, 'vscode is not installed.'
+
+    return True, None
 
 
 def cb_start(options):
