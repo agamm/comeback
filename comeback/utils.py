@@ -1,5 +1,6 @@
 from sys import platform as _platform
 import subprocess
+import importlib
 
 
 def get_platform():
@@ -14,3 +15,8 @@ def get_platform():
 
 def open(cmd):
     subprocess.Popen(cmd, shell=False, stdin=None, stdout=None, stderr=None, close_fds=True)
+
+
+def module_exists(module_name):
+    spec = importlib.util.find_spec(module_name)
+    return spec is not None
