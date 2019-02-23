@@ -1,5 +1,5 @@
 
-### Comeback: Project restoration in one command, go right back to where you were
+## Comeback: Project restoration in one command, go right back to where you were
 ![comeback](https://user-images.githubusercontent.com/1269911/53277678-c7574a80-370d-11e9-8fc1-1b47fe0e8550.png) 
 
 [THIS IS A WORK IN PROGRESS]
