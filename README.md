@@ -30,6 +30,13 @@ chrome:
 - I would like to have a more abstract way to restore my project (maybe adding more features in the future like window positioning etc...)
 - The moment this repo has a bunch of plugins, it would be much nicer to interact with all the programs rather than using bash manually for each tool (not to mention not being DRY)
 
+### How to write a plugin
+1) Create a new directory with the name of the tool you want to interact with
+2) Add a `__init__.py` file in that directory
+3) Create a `main.py` file with two functions:
+	- `cb_test` - used to check if the plugin can run
+	- `cb_start` - actually start the plugin, write per each os (you can use the utils helper)
+
 ### Future
  - Add window positioning (maybe https://pyautogui.readthedocs.io/en/latest/introduction.html)
  - Use application specific settings temporarily to open the application in the desired state (thanks @MaorCore)
