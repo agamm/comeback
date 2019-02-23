@@ -2,6 +2,8 @@
 ### Comeback: Project restoration in one command, go right back to where you were
 ![comeback](https://user-images.githubusercontent.com/1269911/53277678-c7574a80-370d-11e9-8fc1-1b47fe0e8550.png) 
 
+[THIS IS A WORK IN PROGRESS]
+
 **Comeback** is a tool that helps you open your projects ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to business. It's like virtualenv for your project development tooling state.
 
 ### How much time does this save?
@@ -33,3 +35,6 @@ chrome:
  - Use application specific settings temporarily to open the application in the desired state (thanks @MaorCore)
  - Make os commands easier to use in plugins
  - Tests, tests and tests.
+ 
+### Contributing
+See the `CONTRIBUTING.md` file
