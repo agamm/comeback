@@ -1,8 +1,8 @@
+[THIS IS A WORK IN PROGRESS]
 
 ## Comeback: Project restoration in one command, auto open everything!
 ![comeback](https://user-images.githubusercontent.com/1269911/53277678-c7574a80-370d-11e9-8fc1-1b47fe0e8550.png) 
 
-[THIS IS A WORK IN PROGRESS]
 
 **Comeback** is a tool that helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of really developing. It's like virtualenv for your project's development tooling state. Just add a configuration file and off you go.
 
