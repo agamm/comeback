@@ -39,6 +39,24 @@ chrome:
 	- `cb_test` - used to check if the plugin can run
 	- `cb_start` - actually start the plugin, write per each os (you can use the utils helper)
 
+### Ideas of `.comeback` confs for each kind of developer:
+- comeback for frontend developers: 
+    - open chrome with live reload 
+    - open sublime in the specific project path
+    - open a terminal with `npm run start`
+- comeback for backend developers:
+    - open goland in the specific project path
+    - open postman with the project specific routes
+    - open a terminal and run the server
+- comeback for game developers:
+    - open the ide in the specific project path
+    - open chrome with the relevant docs
+    - open the terminal to view logs
+- comeback for hackers:
+    - open tmux with the relevant sessions
+    - open FF
+    - open IDA
+
 ### Future
  - Add window positioning (maybe https://pyautogui.readthedocs.io/en/latest/)
  - Use application specific settings temporarily to open the application in the desired state (thanks @MaorCore)
