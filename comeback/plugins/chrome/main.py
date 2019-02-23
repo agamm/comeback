@@ -13,7 +13,7 @@ def cb_test(options):
     if not utils.module_exists('webbrowser'):
         return False, 'webbrowser module doesn\'t exist!'
 
-    return True
+    return True, None
 
 
 def cb_start(options):
