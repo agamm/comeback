@@ -1,80 +1,89 @@
-import click
-import os
-import sys
-import yaml
-from . import plugins
-import pkgutil
 import importlib
+import os
+import pathlib
+import pkgutil
+import sys
+
+import click
+import yaml
+
+from comeback import plugins
 
 
-def exit():
-    sys.exit()
+exit = sys.exit
+get_cwd = pathlib.Path.cwd
+
+IS_VERBOSE = False
 
 
-def init_comeback(verbose):
-    if verbose:
-        click.echo('Creating a blank .comeback configuration file.')
-
-
-def get_cwd():
-    return os.path.normpath(os.getcwd())
+def verbose_echo(msg):
+    if IS_VERBOSE:
+        click.echo(msg)
 
 
 def get_probable_project_name():
-    path = get_cwd()
-    return path.split(os.sep)[-1]
+    return get_cwd().name
 
 
-def get_installed_plugins():
-    return [name for _, name, _ in pkgutil.iter_modules(plugins.__path__)]
-
-
-def call_plugin(module, app_name, app_params):
-    check, err = module.cb_test(app_params)
-    if not check:
-        click.echo("Cloudn't use plugin {name}, {err}".format(name=app_name, err=err))
+def call_plugin(module, plugin_name, **plugin_params):
+    is_startable, err = module.check(**plugin_params)
+    if not is_startable:
+        click.echo(f"Couldn't use plugin {plugin_name}: {err}")
         exit()
-    module.cb_start(app_params)
+    module.run(**plugin_params)
 
 
-def run_config(config, verbose=False):
-    for app_name, app_params in config.items():
+def is_plugin_exists(plugin_name):
+    all_plugins = plugins.__all__
+    is_plugin_found = plugin_name in all_plugins
+    if not is_plugin_found:
+        click.echo(f'Installed plugins: {", ".join(all_plugins)}')
+        click.echo(f'Unknown plugin: {plugin_name}')
+    return is_plugin_found
 
-        if app_name not in get_installed_plugins():
-            click.echo("Installed plugins: {}".format(",".join(get_installed_plugins())))
-            click.echo("No plugin found for {}".format(app_name))
+
+def load_plugin(plugin_name, plugin_params):
+    importer = f'{plugins.__name__}.{plugin_name}.main'
+    m = importlib.import_module(importer)
+    call_plugin(m, plugin_name, **plugin_params)
+
+
+def run_config(config):
+    for plugin_name, plugin_params in config.items():
+        if not is_plugin_exists(plugin_name):
             exit()
 
-        if verbose:
-            click.echo("Starting {}...".format(app_name))
-            click.echo("\tParams {}...".format(app_params))
-
-        # Iterate all the plugins and choose the correct one
-        for importer, name, _ in pkgutil.iter_modules(plugins.__path__):
-            if name != app_name:
-                continue
-            m = importlib.import_module(plugins.__name__ + '.' + name + '.main')
-            call_plugin(m, app_name, app_params)
-            break
+        verbose_echo('Starting {plugin_name}...')
+        verbose_echo('\tParams {plugin_params}...')
+        
+        load_plugin(plugin_name, plugin_params)
 
 
-def load_config(verbose):
-    cwd = get_cwd()
-    if verbose:
-        click.echo('Loading configuration file form: {}'.format(cwd))
-
-    conf_path = os.path.join(cwd, ".comeback")
-    with open(conf_path, 'r') as fd:
-        try:
-            run_config(yaml.load(fd), verbose)
-        except yaml.YAMLError as exc:
-            click.echo(exc)
+def read_config_file(config_path):
+    try:
+        with open(config_path, 'r') as fd:
+            return yaml.load(fd)
+    except IOError:
+        print(f'Could not read file: {config_path}')
+    except yaml.YAMLError as exc:
+        click.echo(exc)
 
 
-def main(verbose):
+def load_config():
+    verbose_echo('Loading configuration file form: {cwd}')
+    config_path = get_cwd() / '.comeback'
+    config = read_config_file(config_path)
+
+    if config is None:
+        return None
+
+    run_config(config)
+
+
+def main():
     probable_project_name = get_probable_project_name()
-    click.echo('Starting {}\'s comeback...'.format(probable_project_name))
-    load_config(verbose)
+    click.echo(f'Starting {probable_project_name}\'s comeback...')
+    load_config()
 
 
 @click.command()
@@ -82,8 +91,11 @@ def main(verbose):
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
 # @click.option('--conf', default=False, help='Specify a specific .comeback configuration file path')
 def cli(init, verbose):
+    global IS_VERBOSE
+    IS_VERBOSE = verbose
+
     if init:
-        init_comeback(verbose)
+        verbose_echo('Creating a blank .comeback configuration file.')
         return
 
-    main(verbose)
+    main()
