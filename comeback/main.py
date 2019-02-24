@@ -63,8 +63,8 @@ def read_config_file(config_path):
     try:
         with open(config_path, 'r') as fd:
             return yaml.load(fd)
-    except IOError:
-        print(f'Could not read file: {config_path}')
+    except IOError as e:
+        click.echo(f'Could not read file {config_path} because {e}')
     except yaml.YAMLError as exc:
         click.echo(exc)
 
@@ -96,6 +96,7 @@ def cli(init, verbose):
 
     if init:
         verbose_echo('Creating a blank .comeback configuration file.')
+        get_cwd().joinpath('.comeback').touch()
         return
 
     main()
