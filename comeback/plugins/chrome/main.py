@@ -15,7 +15,7 @@ def open_url_with_browser(browser_name, url):
 
 
 
-def check(url=None):
+def check_plugin(url=None):
     """Test if we can use this plugin"""
     if url is None:
         return False, 'url parameter is not set.'
@@ -23,7 +23,7 @@ def check(url=None):
     return True, None
 
 
-def run(url):
+def run_plugin(url):
     browser_names = ['google-chrome', 'chrome']
     success = False
 

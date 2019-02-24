@@ -5,7 +5,7 @@ import subprocess
 from comeback import utils
 
 
-def check(cwd=None):
+def check_plugin(cwd=None):
     """Test if we can use this plugin"""
     if 'cwd' is None:
         return False, 'cwd parameter is not set.'
@@ -16,6 +16,6 @@ def check(cwd=None):
     return True, None
 
 
-def run(cwd):
+def run_plugin(cwd):
     directory = pathlib.Path(cwd).expanduser()
     subprocess.call(f'code {directory}', shell=True)

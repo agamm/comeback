@@ -26,11 +26,11 @@ def get_probable_project_name():
 
 
 def call_plugin(module, plugin_name, **plugin_params):
-    is_startable, err = module.check(**plugin_params)
+    is_startable, err = module.check_plugin(**plugin_params)
     if not is_startable:
         click.echo(f"Couldn't use plugin {plugin_name}: {err}")
         exit()
-    module.run(**plugin_params)
+    module.run_plugin(**plugin_params)
 
 
 def is_plugin_exists(plugin_name):
