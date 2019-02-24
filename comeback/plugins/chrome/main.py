@@ -1,32 +1,36 @@
 import os
 import subprocess
+import webbrowser
+
 from comeback import utils
 
 
-def cb_test(options):
-    """
-        Test if we can use this plugin
-    """
-    if 'url' not in options:
-        return False, 'URL parameter is not set.'
+def open_url_with_browser(browser_name, url):
+    try:
+        browser = webbrowser.get(using=browser_name)
+        browser.open_new_tab(url)
+        return True
+    except webbrowser.Error:
+        return False
 
-    if not utils.module_exists('webbrowser'):
-        return False, 'webbrowser module doesn\'t exist!'
+
+
+def check_plugin(url=None):
+    """Test if we can use this plugin"""
+    if url is None:
+        return False, 'url parameter is not set.'
 
     return True, None
 
 
-def cb_start(options):
-    import webbrowser
-    new = 2  # open in a new tab
-    try:
-        webbrowser.get(using='google-chrome').open(options['url'], new=new)
-    except webbrowser.Error:
-        pass
+def run_plugin(url):
+    browser_names = ['google-chrome', 'chrome']
+    success = False
 
-    # Try to open again, and if it doesn't work open the default
-    try:
-        webbrowser.get(using='chrome').open(options['url'], new=new)
-    except webbrowser.Error:
-        webbrowser.open(options['url'], new=new)
+    while browser_names and not success:
+        browser_name = browser_names.pop()
+        success = open_url_with_browser(browser_name, url)
+    
+    if not success:
+        webbrowser.open_new_tab(url)
 
