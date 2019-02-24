@@ -35,6 +35,7 @@ def is_module_exists(module_name):
 
 
 def get_dirs_in_dir(dirpath):
+    """Returns 1st level of dirs in a path"""
     p = Path(dirpath).glob('*')
     return [x for x in p if x.is_dir()]
 
