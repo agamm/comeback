@@ -53,8 +53,8 @@ def run_config(config):
         if not is_plugin_exists(plugin_name):
             exit()
 
-        verbose_echo('Starting {plugin_name}...')
-        verbose_echo('\tParams {plugin_params}...')
+        verbose_echo(f'Starting {plugin_name}...')
+        verbose_echo(f'\tParams {plugin_params}...')
         
         load_plugin(plugin_name, plugin_params)
 
@@ -70,7 +70,7 @@ def read_config_file(config_path):
 
 
 def load_config():
-    verbose_echo('Loading configuration file form: {cwd}')
+    verbose_echo(f'Loading configuration file form: {get_cwd()}')
     config_path = get_cwd() / '.comeback'
     config = read_config_file(config_path)
 
