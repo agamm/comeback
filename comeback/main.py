@@ -30,8 +30,13 @@ def call_plugin(module, plugin_name, **plugin_params):
     if not is_startable:
         click.echo(f"Couldn't use plugin {plugin_name}: {err}")
         exit()
-    module.run_plugin(**plugin_params)
+    success, err = module.run_plugin(**plugin_params)
 
+    if not success:
+        click.echo(f"There was a problem executing the plugin {plugin_name}: {err}")
+        exit()
+
+    verbose_echo(f"Successfully started {plugin_name}!")
 
 def is_plugin_exists(plugin_name):
     all_plugins = plugins.__all__
