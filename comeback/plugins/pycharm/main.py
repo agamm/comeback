@@ -47,6 +47,10 @@ def run_windows(cwd):
 
 
 def run_plugin(cwd):
+    is_startable, err = check_plugin(cwd)
+    if not is_startable:
+        return False, err
+
     platform = utils.get_platform()
     if platform == "windows":
         return run_windows(cwd)
