@@ -1,9 +1,4 @@
-import os
-import subprocess
 import webbrowser
-
-from comeback import utils
-
 
 def open_url_with_browser(browser_name, url):
     try:
@@ -12,7 +7,6 @@ def open_url_with_browser(browser_name, url):
         return True
     except webbrowser.Error:
         return False
-
 
 
 def check_plugin(url=None):
@@ -30,7 +24,8 @@ def run_plugin(url):
     while browser_names and not success:
         browser_name = browser_names.pop()
         success = open_url_with_browser(browser_name, url)
-    
+
     if not success:
         webbrowser.open_new_tab(url)
 
+    return True, None
