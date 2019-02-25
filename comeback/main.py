@@ -1,14 +1,11 @@
 import importlib
-import os
 import pathlib
-import pkgutil
 import sys
 
 import click
 import yaml
 
 from comeback import plugins
-
 
 exit = sys.exit
 get_cwd = pathlib.Path.cwd
@@ -28,15 +25,17 @@ def get_probable_project_name():
 def call_plugin(module, plugin_name, **plugin_params):
     is_startable, err = module.check_plugin(**plugin_params)
     if not is_startable:
-        click.echo(f"Couldn't use plugin {plugin_name}: {err}")
+        click.echo(f'Couldn\'t use plugin {plugin_name}: {err}')
         exit()
     success, err = module.run_plugin(**plugin_params)
 
     if not success:
-        click.echo(f"There was a problem executing the plugin {plugin_name}: {err}")
+        click.echo(f'There was a problem executing the plugin \
+            {plugin_name}: {err}')
         exit()
 
-    verbose_echo(f"Successfully started {plugin_name}!")
+    verbose_echo(f'Successfully started {plugin_name}!')
+
 
 def is_plugin_exists(plugin_name):
     all_plugins = plugins.__all__
@@ -60,7 +59,7 @@ def run_config(config):
 
         verbose_echo(f'Starting {plugin_name}...')
         verbose_echo(f'\tParams {plugin_params}...')
-        
+
         load_plugin(plugin_name, plugin_params)
 
 
@@ -92,9 +91,9 @@ def main():
 
 
 @click.command()
-@click.option('-i', '--init', default=False, help='Generate a blank .comeback configuration file.')
+@click.option('-i', '--init', default=False, help='Generate a blank \
+    .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
-# @click.option('--conf', default=False, help='Specify a specific .comeback configuration file path')
 def cli(init, verbose):
     global IS_VERBOSE
     IS_VERBOSE = verbose

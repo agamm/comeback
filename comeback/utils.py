@@ -1,9 +1,8 @@
 import importlib
+import pathlib
 import platform
 from shutil import which
 import subprocess
-from pathlib import Path
-
 
 def get_platform():
     platforms = {
@@ -36,8 +35,8 @@ def is_module_exists(module_name):
 
 def get_dirs_in_dir(dirpath):
     """Returns 1st level of dirs in a path"""
-    p = Path(dirpath).glob('*')
-    return [x for x in p if x.is_dir()]
+    p = pathlib.Path(dirpath).glob('*')
+    return filter(pathlib.Path.is_dir, p)
 
 
 def read_file(path):
@@ -51,4 +50,5 @@ def read_file(path):
 
 def report_issue():
     """Used when errors are really f*cked up"""
-    return "report an issue please? ( https://github.com/agamm/comeback/issues )"
+    return "report an issue please? \
+        ( https://github.com/agamm/comeback/issues )"

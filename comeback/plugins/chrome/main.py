@@ -1,9 +1,4 @@
-import os
-import subprocess
 import webbrowser
-
-from comeback import utils
-
 
 def open_url_with_browser(browser_name, url):
     try:

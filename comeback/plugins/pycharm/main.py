@@ -1,7 +1,4 @@
-import os
 import pathlib
-import subprocess
-
 from comeback import utils
 
 
@@ -13,17 +10,13 @@ def check_plugin(cwd=None):
 
 
 def run_windows(cwd):
-    home_dir = os.path.expanduser('~')
-    wdirs = utils.get_dirs_in_dir(home_dir)
-    pycharm_settings_dir = None
+    home = pathlib.Path.home()
+    pycharm_settings_dir = list(home.glob('*pycharm*'))
 
-    for i, v in enumerate(wdirs):
-        if 'pycharm' in v.name.lower():
-            pycharm_settings_dir = v
-
-    if not pycharm_settings_dir:
+    if not pycharm_settings_dir or len(pycharm_settings_dir) == 0:
         return False, "pycharm's settings dir was not found."
 
+    pycharm_settings_dir = pycharm_settings_dir[0]
     # I really hate how JetBrains are forcing me to puke
     home_settings_file = pycharm_settings_dir.joinpath("system", ".home")
     if not home_settings_file.exists():
@@ -32,9 +25,11 @@ def run_windows(cwd):
     install_path = utils.read_file(home_settings_file)
     pycharm_install_path = pathlib.Path(install_path)
     if not pycharm_install_path.exists():
-        return False, f"pycharm's install path from the settings file is not correct, {utils.report_issue()}"
+        return False, f"pycharm's install path from the settings \
+            file is not correct, {utils.report_issue()}"
 
-    # I actually checked and the pycharm.exe is 32bit, let's only use it if the 64 is not found
+    # I actually checked and the pycharm.exe is 32bit,
+    #  let's only use it if the 64 is not found
     pycharm_exe32 = pycharm_install_path.joinpath("bin", "pycharm.exe")
     pycharm_exe64 = pycharm_install_path.joinpath("bin", "pycharm64.exe")
 
@@ -56,6 +51,6 @@ def run_plugin(cwd):
     if platform == "windows":
         return run_windows(cwd)
     elif platform == "linux":
-        pass  # @TODO
+        pass
     elif platform == "mac":
-        pass  # @TODO
+        pass
