@@ -1,9 +1,4 @@
-import os
-import subprocess
 import webbrowser
-
-from comeback import utils
-
 
 def open_url_with_browser(browser_name, url):
     try:
@@ -33,3 +28,6 @@ def run_plugin(url):
 
     if not success:
         webbrowser.open_new_tab(url)
+
+    return True, None
+
