@@ -23,15 +23,16 @@ def get_probable_project_name():
 
 
 def call_plugin(module, plugin_name, **plugin_params):
-    is_startable, err = module.check_plugin(**plugin_params)
-    if not is_startable:
-        click.echo(f'Couldn\'t use plugin {plugin_name}: {err}')
+    try:
+        success, err = module.run_plugin(**plugin_params)
+    except TypeError as e:
+        click.echo(
+            f'There was a problem executing the plugin {plugin_name}: {e}')
         exit()
-    success, err = module.run_plugin(**plugin_params)
 
     if not success:
-        click.echo(f'There was a problem executing the plugin \
-            {plugin_name}: {err}')
+        click.echo(
+            f'There was a problem executing the plugin {plugin_name}: {err}')
         exit()
 
     verbose_echo(f'Successfully started {plugin_name}!')
@@ -47,6 +48,14 @@ def is_plugin_exists(plugin_name):
 
 
 def load_plugin(plugin_name, plugin_params):
+    if not plugin_name:
+        click.echo(f'Can\'t load a plugin without a plugin name')
+        exit()
+
+    # Fix plugins that don't require params
+    if not plugin_params:
+        plugin_params = {}
+
     importer = f'{plugins.__name__}.{plugin_name}.main'
     m = importlib.import_module(importer)
     call_plugin(m, plugin_name, **plugin_params)

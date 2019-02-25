@@ -16,7 +16,9 @@ def check_plugin(cwd=None):
 
 
 def run_plugin(cwd):
-    check_plugin(cwd)
+    is_startable, err = check_plugin(cwd)
+    if not is_startable:
+        return False, err
     directory = pathlib.Path(cwd).expanduser()
     subprocess.call(f'code {directory}', shell=True)
     return True, None

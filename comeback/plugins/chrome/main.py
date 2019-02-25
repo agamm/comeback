@@ -18,7 +18,10 @@ def check_plugin(url=None):
 
 
 def run_plugin(url):
-    check_plugin(url)
+    is_startable, err = check_plugin(url)
+    if not is_startable:
+        return False, err
+
     browser_names = ['google-chrome', 'chrome']
     success = False
 
