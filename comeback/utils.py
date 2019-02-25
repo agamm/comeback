@@ -10,7 +10,7 @@ def get_platform():
         'Windows': 'windows',
         'Darwin': 'mac',
     }
-    
+
     return platforms.get(platform.system(), 'other')
 
 

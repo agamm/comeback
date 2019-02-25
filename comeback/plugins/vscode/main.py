@@ -17,5 +17,6 @@ def check_plugin(cwd=None):
 
 
 def run_plugin(cwd):
+    check_plugin(cwd)
     directory = pathlib.Path(cwd).expanduser()
     subprocess.call(f'code {directory}', shell=True)

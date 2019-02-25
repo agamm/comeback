@@ -14,7 +14,6 @@ def open_url_with_browser(browser_name, url):
         return False
 
 
-
 def check_plugin(url=None):
     """Test if we can use this plugin"""
     if url is None:
@@ -24,13 +23,13 @@ def check_plugin(url=None):
 
 
 def run_plugin(url):
+    check_plugin(url)
     browser_names = ['google-chrome', 'chrome']
     success = False
 
     while browser_names and not success:
         browser_name = browser_names.pop()
         success = open_url_with_browser(browser_name, url)
-    
+
     if not success:
         webbrowser.open_new_tab(url)
-
