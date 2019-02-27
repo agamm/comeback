@@ -22,6 +22,18 @@ def get_probable_project_name():
     return get_cwd().name
 
 
+def parse_args(args_string):
+    if not args_string:
+        return {}
+
+    ret_args = {}
+    for arg in args_string.split(","):
+        key_value = arg.split("=")
+        ret_args[key_value[0]] = key_value[1]
+
+    return ret_args
+
+
 def call_plugin(module, plugin_name, **plugin_params):
     try:
         success, err = module.run_plugin(**plugin_params)
@@ -99,7 +111,7 @@ def main():
     load_config()
 
 
-@click.command()
+@click.group()
 @click.option('-i', '--init', default=False, help='Generate a blank \
     .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
@@ -113,3 +125,13 @@ def cli(init, verbose):
         return
 
     main()
+
+
+@cli.command(context_settings=dict(
+    ignore_unknown_options=True,
+))
+@click.argument('plugin', required=False)
+@click.argument('plugin_params', required=False)
+def run(plugin, plugin_params):
+    verbose_echo("Running specific plugin.")
+    load_plugin(plugin, parse_args(plugin_params))
