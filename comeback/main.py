@@ -127,9 +127,7 @@ def cli(init, verbose):
     main()
 
 
-@cli.command(context_settings=dict(
-    ignore_unknown_options=True,
-))
+@cli.command()
 @click.argument('plugin', required=False)
 @click.argument('plugin_params', required=False)
 def run(plugin, plugin_params):
