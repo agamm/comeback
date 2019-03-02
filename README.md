@@ -86,7 +86,7 @@ You may want to see the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob
  
 ## Contributing
 ![uncle-sam-wants-you](https://user-images.githubusercontent.com/1269911/53686114-de102980-3d2b-11e9-9a30-be27ec3412a7.jpg)  
-Sammy wants you to help :) you can be one of our [active contributers](https://github.com/agamm/comeback/graphs/contributors).   
+Sammy wants you to help :) you can be one of our [active contributors](https://github.com/agamm/comeback/graphs/contributors).   
 A great place to start is to go to our [issues](https://github.com/agamm/comeback/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22), and search for the tag "good first issue".   
 Even just adding a new [feature request / bug](https://github.com/agamm/comeback/issues/new/choose) can help.  
 See the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob/master/CONTRIBUTING.md) file
