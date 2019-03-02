@@ -75,6 +75,7 @@ def run_plugin(cwd, pycharm_path=False):
     if not is_startable:
         return False, err
 
+    cwd = pathlib.Path(cwd).expanduser()
     platform = utils.get_platform()
     if platform == "windows":
         return run_windows(cwd)
