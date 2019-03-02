@@ -15,7 +15,7 @@ def run_windows(cwd: str) -> utils.RUN_STATUS:
     home = pathlib.Path.home()
     pycharm_settings_dirs = list(home.glob('*pycharm*'))
 
-    if not pycharm_settings_dir or len(pycharm_settings_dir) == 0:
+    if not pycharm_settings_dirs or len(pycharm_settings_dirs) == 0:
         return False, 'pycharm\'s settings dir was not found.'
 
     pycharm_settings_dir = pycharm_settings_dirs[0]
@@ -48,8 +48,8 @@ def run_windows(cwd: str) -> utils.RUN_STATUS:
     return True, 'Found pycharm'
 
 
-def run_linux(cwd, pycharm_path):
-    if not utils.binary_exists('pycharm-community'):
+def run_linux(cwd: str, pycharm_path: Optional[str]) -> utils.RUN_STATUS:
+    if not utils.is_binary_exists('pycharm-community'):
         if not pycharm_path:
             return False, \
                    'PyCharm not found, please provide pycharm_path option'
@@ -60,23 +60,24 @@ def run_linux(cwd, pycharm_path):
     return True, 'Found pycharm'
 
 
-def run_mac(cwd):
+def run_mac(cwd: str) -> utils.RUN_STATUS:
     apps_path = pathlib.Path('/Applications')
     pycharm_dir_pattern = '*[Pp]y[Cc]harm*'
     results = list(apps_path.glob(pycharm_dir_pattern))
     if not results:
-        return False, "Didn't find pycharm in applications, did you install it?"
+        return False, "Can't find PyCharm in Applications, did you install it?"
 
     pycharm_path = str(results[0])
     utils.run(f'open "{pycharm_path}" --args {cwd}', use_shell=True)
     return True, 'Found pycharm'
 
 
-def run_plugin(cwd, pycharm_path=False):
+def run_plugin(cwd: Optional[str],
+               pycharm_path: Optional[str] = None) -> utils.RUN_STATUS:
     is_startable, err = check_plugin(cwd)
     if not is_startable:
         return False, err
-    assert cwd is not None
+    assert isinstance(cwd, str)
 
     cwd = pathlib.Path(cwd).expanduser()
     platform = utils.get_platform()
@@ -86,3 +87,5 @@ def run_plugin(cwd, pycharm_path=False):
         return run_linux(cwd, pycharm_path)
     elif platform == "mac":
         return run_mac(cwd)
+
+    return False, 'Failed to identify your OS'
