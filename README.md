@@ -33,7 +33,7 @@ chrome:
 `pipenv shell`  
 `pipenv install -e .`  
 `comeback --help`  
-`cd example`
+`cd example`  
 `comeback # and see the magic`  
 #### Global (via pip):
 `pip install -e /path/to/comeback`  
