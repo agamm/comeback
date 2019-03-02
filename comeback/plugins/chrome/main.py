@@ -1,6 +1,10 @@
+from typing import Optional
 import webbrowser
 
-def open_url_with_browser(browser_name, url):
+from comeback import utils
+
+
+def open_url_with_browser(browser_name: str, url: str) -> bool:
     try:
         browser = webbrowser.get(using=browser_name)
         browser.open_new_tab(url)
@@ -9,7 +13,7 @@ def open_url_with_browser(browser_name, url):
         return False
 
 
-def check_plugin(url=None):
+def check_plugin(url: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
     if url is None:
         return False, 'url parameter is not set.'
@@ -17,7 +21,7 @@ def check_plugin(url=None):
     return True, None
 
 
-def run_plugin(url):
+def run_plugin(url: str) -> utils.RUN_STATUS:
     is_startable, err = check_plugin(url)
     if not is_startable:
         return False, err

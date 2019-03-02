@@ -3,6 +3,12 @@
 When contributing to this repository, please first discuss the change you wish to make via an issue.
 Only use MIT compliant licenses.
 
+## Coding Standard
+
+1. We are [PEP 8](https://www.python.org/dev/peps/pep-0008/) compliant.
+   Please use [flake8](http://flake8.pycqa.org/en/latest/) before pushing.
+2. We use [mypy](http://mypy-lang.org/) to run static type checks on our codebase.
+
 ## Pull Request Process
 
 1. Update the README.md with details of changes to the interface, this includes new environment 

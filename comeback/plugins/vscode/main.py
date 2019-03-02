@@ -1,10 +1,11 @@
 import pathlib
 import subprocess
+from typing import cast, Optional
 
 from comeback import utils
 
 
-def check_plugin(cwd=None):
+def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
     if 'cwd' is None:
         return False, 'cwd parameter is not set.'
@@ -15,10 +16,11 @@ def check_plugin(cwd=None):
     return True, None
 
 
-def run_plugin(cwd):
+def run_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     is_startable, err = check_plugin(cwd)
     if not is_startable:
         return False, err
+    assert cwd is not None
     directory = pathlib.Path(cwd).expanduser()
     subprocess.call(f'code {directory}', shell=True)
     return True, None

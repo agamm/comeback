@@ -1,24 +1,26 @@
 import pathlib
+from typing import Optional
+
 from comeback import utils
 
 
-def check_plugin(cwd=None):
+def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
     if 'cwd' is None:
         return False, 'cwd parameter is not set.'
     return True, None
 
 
-def run_windows(cwd):
+def run_windows(cwd: str) -> utils.RUN_STATUS:
     home = pathlib.Path.home()
-    pycharm_settings_dir = list(home.glob('*pycharm*'))
+    pycharm_settings_dirs = list(home.glob('*pycharm*'))
 
     if not pycharm_settings_dir or len(pycharm_settings_dir) == 0:
         return False, 'pycharm\'s settings dir was not found.'
 
-    pycharm_settings_dir = pycharm_settings_dir[0]
+    pycharm_settings_dir = pycharm_settings_dirs[0]
     # I really hate how JetBrains are forcing me to puke
-    home_settings_file = pycharm_settings_dir.joinpath("system", ".home")
+    home_settings_file = pycharm_settings_dir.joinpath('system', '.home')
     if not home_settings_file.exists():
         return False, 'pycharm\'s settings .home file was not found.'
 
@@ -74,10 +76,11 @@ def run_plugin(cwd, pycharm_path=False):
     is_startable, err = check_plugin(cwd)
     if not is_startable:
         return False, err
+    assert cwd is not None
 
     cwd = pathlib.Path(cwd).expanduser()
     platform = utils.get_platform()
-    if platform == "windows":
+    if platform == 'windows':
         return run_windows(cwd)
     elif platform == "linux":
         return run_linux(cwd, pycharm_path)
