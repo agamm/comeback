@@ -29,6 +29,8 @@ chrome:
 or Install globally via pip  
 `pip install -e /path/to/comeback`  
 (the directory must have the setup.py file in it)  
+Sometimes on linux you may need to configure site-pacakges to be in path like so:  
+`export PATH="$PATH:~/path/to/python/site-packages"`  
 *Later it would be installed normally with pip install comeback*
 
 ## Why not bash/batch?

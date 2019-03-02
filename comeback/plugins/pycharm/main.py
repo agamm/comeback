@@ -51,9 +51,11 @@ def run_mac(cwd):
     apps = list(apps_path.glob("*"))
     results = list(filter(lambda x: "pycharm" in x.name.lower(), apps))
     if len(results) == 0:
-        print("not found")
+        return False, "Didn't find pycharm in applications, did you install it?"
+
     pycharm_path = str(results[0])
     utils.run(f"open {pycharm_path} {cwd}")
+    return True, "Found pycharm"
 
 def run_plugin(cwd):
     is_startable, err = check_plugin(cwd)
