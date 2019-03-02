@@ -11,7 +11,7 @@
 <img src="https://img.shields.io/badge/production-not%20ready-orange.svg" alt="Prodcution" />
 </p>
 
-**Comeback** - **Project restoration in one command, auto open everything!**. comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
+**Comeback** - **Project restoration in one command, auto open everything!** comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
 
 ## How much time does this save?
 If it takes you an average of 2 minutes to open all of your project's tools, then you waste about 8.5 hours a year per project, not to mention the friction it adds to start really working :O
@@ -87,6 +87,7 @@ You may want to see the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob
 ## Contributing
 ![uncle-sam-wants-you](https://user-images.githubusercontent.com/1269911/53686114-de102980-3d2b-11e9-9a30-be27ec3412a7.jpg)  
 Sammy wants you to help :) you can be one of our [active contributers](https://github.com/agamm/comeback/graphs/contributors).   
-A great place to start is to go to our [issues](https://github.com/agamm/comeback/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22), and search for the tag "good first issue".  
+A great place to start is to go to our [issues](https://github.com/agamm/comeback/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22), and search for the tag "good first issue".   
+Even just adding a new [feature request / bug](https://github.com/agamm/comeback/issues/new/choose) can help.  
 See the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob/master/CONTRIBUTING.md) file
 
