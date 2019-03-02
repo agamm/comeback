@@ -39,9 +39,8 @@ or Install globally via pip
 ## How to write a plugin
 1) Create a new directory with the name of the tool you want to interact with
 2) Add a `__init__.py` file in that directory
-3) Create a `main.py` file with two functions:
-	- `cb_test` - used to check if the plugin can run
-	- `cb_start` - actually start the plugin, write per each os (you can use the utils helper)
+3) Create a `main.py` file with:
+	- `run_plugin(arg0, arg1...)` - start the plugin, make sure this is cross-platform.
 
 ## Ideas of `.comeback` confs for each kind of developer:
 - comeback for frontend developers: 
