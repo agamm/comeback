@@ -24,12 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem - THEY REALLY HELP PICTURES ARE LIFE.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
+ - OS: [e.g. mac osx]
+ - Plugin: [e.g. chrome/vscode]
  - Version [e.g. 22]
 
-
-**Additional context**
-Add any other context about the problem here.
 
 *Much appreciated, may the back come to you.*
