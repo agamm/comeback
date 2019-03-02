@@ -66,7 +66,7 @@ def run_mac(cwd):
         return False, "Didn't find pycharm in applications, did you install it?"
 
     pycharm_path = str(results[0])
-    utils.run(f'open {pycharm_path} {cwd}')
+    utils.run(f'open "{pycharm_path}" --args {cwd}', use_shell=True)
     return True, 'Found pycharm'
 
 
