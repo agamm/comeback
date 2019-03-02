@@ -12,12 +12,12 @@ setup(
     license="MIT",
     install_requires=[
         'click',
-        'pyyaml'
+        'pyyaml',
     ],
     entry_points={
         'console_scripts': ['comeback=comeback.main:cli'],
     },
-    download_url='https://github.com/agamm/comeback/archive/v0.0.1-alpha.tar.gz',
+    download_url='https://github.com/agamm/comeback/archive/v0.0.2-alpha.tar.gz',
     classifiers=[
         'Development Status :: 3 - Alpha',
         # "3 - Alpha", "4 - Beta" or "5 - Production/Stable"

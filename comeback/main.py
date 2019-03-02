@@ -22,6 +22,18 @@ def get_probable_project_name():
     return get_cwd().name
 
 
+def parse_args(args_string):
+    if not args_string:
+        return {}
+
+    ret_args = {}
+    for arg in args_string.split(","):
+        key_value = arg.split("=")
+        ret_args[key_value[0]] = key_value[1]
+
+    return ret_args
+
+
 def call_plugin(module, plugin_name, **plugin_params):
     try:
         success, err = module.run_plugin(**plugin_params)
@@ -99,13 +111,18 @@ def main():
     load_config()
 
 
-@click.command()
+@click.group(invoke_without_command=True)
+@click.pass_context
 @click.option('-i', '--init', default=False, help='Generate a blank \
     .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
-def cli(init, verbose):
+def cli(ctx, init, verbose):
     global IS_VERBOSE
     IS_VERBOSE = verbose
+
+    if ctx.invoked_subcommand is not None:
+        verbose_echo('Invoking subcommand: %s' % ctx.invoked_subcommand)
+        return
 
     if init:
         verbose_echo('Creating a blank .comeback configuration file.')
@@ -113,3 +130,11 @@ def cli(init, verbose):
         return
 
     main()
+
+
+@cli.command()
+@click.argument('plugin', required=True)
+@click.argument('plugin_params', required=False)
+def run(plugin, plugin_params):
+    verbose_echo(f'Running plugins: {plugin} with args: {plugin_params}')
+    load_plugin(plugin, parse_args(plugin_params))
