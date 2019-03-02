@@ -14,7 +14,7 @@ def run_windows(cwd):
     pycharm_settings_dir = list(home.glob('*pycharm*'))
 
     if not pycharm_settings_dir or len(pycharm_settings_dir) == 0:
-        return False, 'pycharm\'s settings dir was not found.''
+        return False, 'pycharm\'s settings dir was not found.'
 
     pycharm_settings_dir = pycharm_settings_dir[0]
     # I really hate how JetBrains are forcing me to puke
