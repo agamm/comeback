@@ -11,7 +11,7 @@
 <img src="https://img.shields.io/badge/production-not%20ready-orange.svg" alt="Prodcution" />
 </p>
 
-**Comeback** **Project restoration in one command, auto open everything!**. comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
+**Comeback** - **Project restoration in one command, auto open everything!**. comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
 
 ## How much time does this save?
 If it takes you an average of 2 minutes to open all of your project's tools, then you waste about 8.5 hours a year per project, not to mention the friction it adds to start really working :O
