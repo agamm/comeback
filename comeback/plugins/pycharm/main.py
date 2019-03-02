@@ -60,8 +60,8 @@ def run_linux(cwd, pycharm_path):
 
 def run_mac(cwd):
     apps_path = pathlib.Path('/Applications')
-    apps = apps_path.glob("*")
-    results = list(filter(lambda x: "pycharm" in x.name.lower(), apps))
+    pycharm_dir_pattern = '*[Pp]y[Cc]harm*'
+    results = list(apps_path.glob(pycharm_dir_pattern))
     if not results:
         return False, "Didn't find pycharm in applications, did you install it?"
 
