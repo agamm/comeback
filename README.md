@@ -44,9 +44,10 @@ chrome:
 
 
 ## Current plugins:
-![pycharm logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/PyCharm_Logo.svg/48px-PyCharm_Logo.svg.png)
-![chrome logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/48px-Google_Chrome_icon_%28September_2014%29.svg.png)
-![vscode logo](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Visual_Studio_Code_1.17_icon.svg/48px-Visual_Studio_Code_1.17_icon.svg.png)
+[![pycharm logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/PyCharm_Logo.svg/48px-PyCharm_Logo.svg.png)](https://github.com/agamm/comeback/tree/master/comeback/plugins/pycharm)
+[![chrome logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/48px-Google_Chrome_icon_%28September_2014%29.svg.png)](https://github.com/agamm/comeback/tree/master/comeback/plugins/chrome)
+[![vscode logo](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Visual_Studio_Code_1.17_icon.svg/48px-Visual_Studio_Code_1.17_icon.svg.png)](https://github.com/agamm/comeback/tree/master/comeback/plugins/vscode)
+[![kisspng-ipython-jupyter-shell-computer-software-bisht-5b3617c07b2788 1439156715302716805045](https://user-images.githubusercontent.com/1269911/53688684-5852a500-3d50-11e9-9496-a0f6f60f4f3f.jpg)](https://github.com/agamm/comeback/tree/master/comeback/plugins/ipython)
 
 ## Why not bash/batch?
 - It isn't cross-platform.
