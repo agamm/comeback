@@ -136,6 +136,5 @@ def cli(ctx, init, verbose):
 @click.argument('plugin', required=True)
 @click.argument('plugin_params', required=False)
 def run(plugin, plugin_params):
-    print(plugin, plugin_params)
-    verbose_echo("Running specific plugin.")
+    verbose_echo(f'Running plugins: {plugin} with args: {plugin_params}')
     load_plugin(plugin, parse_args(plugin_params))
