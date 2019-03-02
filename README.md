@@ -85,6 +85,7 @@ You may want to see the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob
  - Tests, tests and tests.
  
 ## Contributing
-[Active contributes](https://github.com/agamm/comeback/graphs/contributors)
+![uncle-sam-wants-you](https://user-images.githubusercontent.com/1269911/53686114-de102980-3d2b-11e9-9a30-be27ec3412a7.jpg)  
+Sammy wants you to help :) you can be one of our [active contributers](https://github.com/agamm/comeback/graphs/contributors).  
 See the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob/master/CONTRIBUTING.md) file
 
