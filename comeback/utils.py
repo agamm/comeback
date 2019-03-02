@@ -2,8 +2,9 @@ import importlib
 import pathlib
 import platform
 from shutil import which
+import shlex
 import subprocess
-from typing import Iterator, Optional, Tuple
+from typing import Any, cast, Dict, Iterator, List, Optional, Tuple, Union
 
 
 RUN_STATUS = Tuple[bool, Optional[str]]
@@ -19,17 +20,36 @@ def get_platform() -> str:
     return platforms.get(platform.system(), 'other')
 
 
-def run(cmd: str, wait: bool = False,
-         use_shell: bool = False) -> None:
-    # Create a detached windows process
-    if wait:
-        subprocess.run(cmd)
-        return
-
-    subprocess.Popen(cmd, shell=use_shell)
+def _format_command(cmd: Union[str, List[str]]) -> List[str]:
+    if isinstance(cmd, str):
+        cmd = shlex.split(cmd)
+    return cmd
 
 
-def binary_exists(bin_name: str) -> bool:
+def _get_detach_flags() -> Dict[str, Any]:
+    kwargs = {}
+    if get_platform() == 'windows':
+        CREATE_NEW_PROCESS_GROUP = 0x00000200
+        DETACHED_PROCESS = 0x00000008
+        kwargs['creationflags'] = DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs['start_new_session'] = True
+    return kwargs
+
+
+def run(cmd: Union[List[str], str],
+        use_shell: bool = False,
+        detach: bool = True) -> None:
+    cmd = _format_command(cmd)
+
+    kwargs = {}
+    if detach:
+        kwargs.update(_get_detach_flags())
+
+    subprocess.Popen(cmd, shell=use_shell, **kwargs)
+
+
+def is_binary_exists(bin_name: str) -> bool:
     return which(bin_name) is not None
 
 

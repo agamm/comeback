@@ -10,7 +10,7 @@ def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     if 'cwd' is None:
         return False, 'cwd parameter is not set.'
 
-    if not utils.binary_exists('code'):
+    if not utils.is_binary_exists('code'):
         return False, 'vscode is not installed.'
 
     return True, None
