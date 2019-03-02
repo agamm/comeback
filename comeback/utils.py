@@ -14,14 +14,13 @@ def get_platform():
     return platforms.get(platform.system(), 'other')
 
 
-def run(cmd, wait=False):
+def run(cmd, wait=False, no_shell=False):
     # Create a detached windows process
     if wait:
         subprocess.run(cmd)
-
         return
 
-    subprocess.Popen(cmd, shell=False)
+    subprocess.Popen(cmd, shell=no_shell)
 
 
 def binary_exists(bin_name):
