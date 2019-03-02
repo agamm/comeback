@@ -46,6 +46,15 @@ def run_windows(cwd):
     return True, "Found pycharm"
 
 
+def run_mac(cwd):
+    apps_path = pathlib.Path('/Applications')
+    apps = list(apps_path.glob("*"))
+    results = list(filter(lambda x: "pycharm" in x.name.lower(), apps))
+    if len(results) == 0:
+        print("not found")
+    pycharm_path = str(results[0])
+    utils.run(f"open {pycharm_path} {cwd}")
+
 def run_plugin(cwd):
     is_startable, err = check_plugin(cwd)
     if not is_startable:
@@ -57,4 +66,4 @@ def run_plugin(cwd):
     elif platform == "linux":
         pass
     elif platform == "mac":
-        pass
+        run_mac(cwd)
