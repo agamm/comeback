@@ -1,0 +1,6 @@
+ipython:
+  modules:
+    - pathlib
+    - random
+    - this
+    - typing
