@@ -39,10 +39,22 @@ def run_windows(cwd):
     if not pyc32 and pyc64:
         return False, "pycharm's exe files are not found."
     elif pyc64:
-        utils.run(f"{pycharm_exe64} {cwd}")
+        utils.run(f'{pycharm_exe64} {cwd}')
     else:
-        utils.run(f"{pycharm_exe64} {cwd}")
+        utils.run(f'{pycharm_exe64} {cwd}')
 
+    return True, "Found pycharm"
+
+
+def run_linux(cwd, pycharm_path):
+    if not utils.binary_exists('pycharm-community'):
+        if not pycharm_path:
+            return False, \
+                   'PyCharm not found, please provide pycharm_path option'
+        utils.run(f'{pycharm_path} {cwd}')
+        return True, "Found pycharm"
+
+    utils.run(f'pycharm-community {cwd}')
     return True, "Found pycharm"
 
 
@@ -54,10 +66,11 @@ def run_mac(cwd):
         return False, "Didn't find pycharm in applications, did you install it?"
 
     pycharm_path = str(results[0])
-    utils.run(f"open {pycharm_path} {cwd}")
-    return True, "Found pycharm"
+    utils.run(f'open {pycharm_path} {cwd}')
+    return True, 'Found pycharm'
 
-def run_plugin(cwd):
+
+def run_plugin(cwd, pycharm_path=False):
     is_startable, err = check_plugin(cwd)
     if not is_startable:
         return False, err
@@ -66,6 +79,6 @@ def run_plugin(cwd):
     if platform == "windows":
         return run_windows(cwd)
     elif platform == "linux":
-        pass
+        run_linux(cwd, pycharm_path)
     elif platform == "mac":
         run_mac(cwd)
