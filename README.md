@@ -38,6 +38,11 @@ Sometimes on linux you may need to configure site-pacakges to be in path like so
 - I would like to have a more abstract way to restore my project (maybe adding more features in the future like window positioning etc...)
 - The moment this repo has a bunch of plugins, it would be much nicer to interact with all the programs rather than using bash manually for each tool (not to mention not being DRY)
 
+## Current plugins:
+![pycharm logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/PyCharm_Logo.svg/48px-PyCharm_Logo.svg.png)
+![chrome logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/48px-Google_Chrome_icon_%28September_2014%29.svg.png)
+![vscode logo](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Visual_Studio_Code_1.17_icon.svg/48px-Visual_Studio_Code_1.17_icon.svg.png)
+
 ## How to write a plugin
 1) Create a new directory with the name of the tool you want to interact with
 2) Add a `__init__.py` file in that directory
