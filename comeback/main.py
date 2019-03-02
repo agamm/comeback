@@ -111,13 +111,18 @@ def main():
     load_config()
 
 
-@click.group()
+@click.group(invoke_without_command=True)
+@click.pass_context
 @click.option('-i', '--init', default=False, help='Generate a blank \
     .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
-def cli(init, verbose):
+def cli(ctx, init, verbose):
     global IS_VERBOSE
     IS_VERBOSE = verbose
+
+    if ctx.invoked_subcommand is not None:
+        verbose_echo('Invoking subcommand: %s' % ctx.invoked_subcommand)
+        return
 
     if init:
         verbose_echo('Creating a blank .comeback configuration file.')
@@ -128,8 +133,9 @@ def cli(init, verbose):
 
 
 @cli.command()
-@click.argument('plugin', required=False)
+@click.argument('plugin', required=True)
 @click.argument('plugin_params', required=False)
 def run(plugin, plugin_params):
+    print(plugin, plugin_params)
     verbose_echo("Running specific plugin.")
     load_plugin(plugin, parse_args(plugin_params))
