@@ -14,7 +14,7 @@ def get_platform():
     return platforms.get(platform.system(), 'other')
 
 
-def run(cmd, wait=False, use_shell=True):
+def run(cmd, wait=False, use_shell=False):
     # Create a detached windows process
     if wait:
         subprocess.run(cmd)
