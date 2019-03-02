@@ -1,24 +1,26 @@
 import pathlib
+from typing import Optional
+
 from comeback import utils
 
 
-def check_plugin(cwd=None):
+def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
     if 'cwd' is None:
         return False, 'cwd parameter is not set.'
     return True, None
 
 
-def run_windows(cwd):
+def run_windows(cwd: str) -> utils.RUN_STATUS:
     home = pathlib.Path.home()
-    pycharm_settings_dir = list(home.glob('*pycharm*'))
+    pycharm_settings_dirs = list(home.glob('*pycharm*'))
 
-    if not pycharm_settings_dir or len(pycharm_settings_dir) == 0:
+    if not pycharm_settings_dirs:
         return False, "pycharm's settings dir was not found."
 
-    pycharm_settings_dir = pycharm_settings_dir[0]
+    pycharm_settings_dir = pycharm_settings_dirs[0]
     # I really hate how JetBrains are forcing me to puke
-    home_settings_file = pycharm_settings_dir.joinpath("system", ".home")
+    home_settings_file = pycharm_settings_dir.joinpath('system', '.home')
     if not home_settings_file.exists():
         return False, "pycharm's settings .home file was not found."
 
@@ -30,8 +32,8 @@ def run_windows(cwd):
 
     # I actually checked and the pycharm.exe is 32bit,
     #  let's only use it if the 64 is not found
-    pycharm_exe32 = pycharm_install_path.joinpath("bin", "pycharm.exe")
-    pycharm_exe64 = pycharm_install_path.joinpath("bin", "pycharm64.exe")
+    pycharm_exe32 = pycharm_install_path.joinpath('bin', 'pycharm.exe')
+    pycharm_exe64 = pycharm_install_path.joinpath('bin', 'pycharm64.exe')
 
     pyc32 = pycharm_exe32.exists()
     pyc64 = pycharm_exe64.exists()
@@ -39,22 +41,25 @@ def run_windows(cwd):
     if not pyc32 and pyc64:
         return False, "pycharm's exe files are not found."
     elif pyc64:
-        utils.run(f"{pycharm_exe64} {cwd}")
+        utils.run(f'{pycharm_exe64} {cwd}')
     else:
-        utils.run(f"{pycharm_exe64} {cwd}")
+        utils.run(f'{pycharm_exe64} {cwd}')
 
-    return True, "Found pycharm"
+    return True, 'Found pycharm'
 
 
-def run_plugin(cwd):
+def run_plugin(cwd: Optional[str]) -> utils.RUN_STATUS:
     is_startable, err = check_plugin(cwd)
     if not is_startable:
         return False, err
+    assert cwd is not None
 
     platform = utils.get_platform()
-    if platform == "windows":
+    if platform == 'windows':
         return run_windows(cwd)
-    elif platform == "linux":
+    elif platform == 'linux':
         pass
-    elif platform == "mac":
+    elif platform == 'mac':
         pass
+
+    return True, None
