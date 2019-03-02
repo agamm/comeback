@@ -8,7 +8,7 @@ from typing import Any, cast, Dict, Iterator, List, Optional, Tuple, Union
 
 
 RUN_STATUS = Tuple[bool, Optional[str]]
-
+CMD_PARAMS = Union[List[str], str]
 
 def get_platform() -> str:
     platforms = {
@@ -20,9 +20,10 @@ def get_platform() -> str:
     return platforms.get(platform.system(), 'other')
 
 
-def _format_command(cmd: Union[str, List[str]]) -> List[str]:
+def _format_command(cmd: CMD_PARAMS) -> List[str]:
     if isinstance(cmd, str):
         cmd = shlex.split(cmd)
+    assert isinstance(cmd, list)
     return cmd
 
 
@@ -37,9 +38,7 @@ def _get_detach_flags() -> Dict[str, Any]:
     return kwargs
 
 
-def run(cmd: Union[List[str], str],
-        use_shell: bool = False,
-        detach: bool = True) -> None:
+def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> None:
     cmd = _format_command(cmd)
 
     kwargs = {}
