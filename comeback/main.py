@@ -7,11 +7,12 @@ from typing import Any, Dict, Optional
 import click
 import yaml
 
+from comeback import config
+from comeback import paths
 from comeback import plugins
 
 
 exit = sys.exit
-get_cwd = pathlib.Path.cwd
 
 IS_VERBOSE = False
 
@@ -22,7 +23,7 @@ def verbose_echo(msg: str) -> None:
 
 
 def get_probable_project_name() -> str:
-    return get_cwd().name
+    return paths.CURRENT_DIR.name
 
 
 def parse_args(args: Optional[str]) -> Dict[str, str]:
@@ -99,15 +100,32 @@ def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     return None
 
 
+def get_config_path() -> pathlib.Path:
+    cwd_path = paths.CURRENT_DIR / '.comeback'
+    if cwd_path.exists():
+        return cwd_path
+    return config.get_last_comeback()
+
+
 def load_config() -> None:
-    verbose_echo(f'Loading configuration file form: {get_cwd()}')
-    config_path = get_cwd() / '.comeback'
+    verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
+    config_path = get_config_path()
     config = read_config_file(config_path)
 
     if config is None:
         return None
 
     run_config(config)
+
+
+def create_comeback_file_here() -> pathlib.Path:
+    verbose_echo('Creating a blank .comeback configuration file.')
+    path = paths.CURRENT_DIR / '.comeback'
+    if path.exists():
+        print('There is already .comeback file here. Will only touch it.')
+    path.touch()
+    config.add_comeback_path(path)
+    return path
 
 
 def main() -> None:
@@ -118,8 +136,8 @@ def main() -> None:
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-@click.option('-i', '--init', default=False, help='Generate a blank \
-    .comeback configuration file.')
+@click.option('-i', '--init', is_flag=True, default=False,
+              help='Generate a blank .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
 def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
     global IS_VERBOSE
@@ -130,8 +148,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
         return
 
     if init:
-        verbose_echo('Creating a blank .comeback configuration file.')
-        get_cwd().joinpath('.comeback').touch()
+        create_comeback_file_here()
         return
 
     main()
