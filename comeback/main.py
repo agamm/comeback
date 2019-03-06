@@ -122,7 +122,7 @@ def create_comeback_file_here() -> pathlib.Path:
     verbose_echo('Creating a blank .comeback configuration file.')
     path = paths.CURRENT_DIR / '.comeback'
     if path.exists():
-        print('There is already .comeback file here. Will only touch it.')
+        verbose_echo('.comeback file already exists here. Will only touch it.')
     path.touch()
     config.add_comeback_path(path)
     return path
