@@ -1,47 +1,19 @@
 import itertools
 import json
 import operator
-import os
 import pathlib
 import time
 from typing import (
-    Any, Dict, Iterator, List, NamedTuple, Optional, Tuple, Union
+    Any, Dict, Iterator, Optional, Tuple, Union
 )
 
 
 from comeback import paths
 
 
-EPOCH = Union[int, float]
-
-
-"""
-This code is for more complicated cases where we may need to save more data.
-
-def reformat_fields(fields: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
-    filepath = str(fields['filepath'])
-    del fields['filepath']
-
-    fields['last_used'] = int(fields.get('last_used', time.time() * 1000))
-
-    return filepath, fields
-
-
-def create_path_entity(**fields: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-    fields = {k: v for k, v in fields.items() if v is not None}
-    mandatory_fields = set(['filepath'])
-    assert mandatory_fields <= set(fields)
-
-    filepath, fields = reformat_fields(fields)
-    path_entity = {filepath: fields}
-    return path_entity
-"""
-
-
-def create_path_entity(filepath: Union[str, pathlib.Path],
-                       last_used: Optional[EPOCH] = None) -> Dict[str, int]:
+def create_path_entity(filepath: Union[str, pathlib.Path]) -> Dict[str, int]:
     filepath = str(filepath)
-    last_used = int(last_used if last_used is not None else time.time())
+    last_used = int(time.time())
     return {filepath: last_used}
 
 
@@ -68,12 +40,11 @@ def write_comeback_paths(paths_to_write: Dict[str, int]) -> None:
     paths_file.write_text(json.dumps(paths_to_write))
 
 
-def add_comeback_path(path: Optional[Union[pathlib.Path, str]] = None,
-                      last_used: Optional[int] = None) -> None:
+def add_comeback_path(path: Optional[Union[pathlib.Path, str]] = None) -> None:
     path = path if path is not None else pathlib.Path.cwd() / '.comeback'
     if not pathlib.Path(path).exists():
         raise FileNotFoundError(f'Can\'t locate {path}')
-    path_to_add = create_path_entity(filepath=path, last_used=last_used)
+    path_to_add = create_path_entity(filepath=path)
     paths_to_write = {**get_comeback_paths(), **path_to_add}
     write_comeback_paths(paths_to_write)
 

@@ -1,8 +1,11 @@
 import os
 import pathlib
-from typing import Any, Dict, NamedTuple
+from typing import NamedTuple
 
 
+# The XDG is a standard that helps declutter the user's home directory
+# from configuration and data files.
+# https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 class XdgPath(NamedTuple):
     name: str
     xdg_variable_name: str
@@ -12,7 +15,7 @@ class XdgPath(NamedTuple):
 HOMEDIR = pathlib.Path.home()
 PATH_KINDS = {
     'data': XdgPath('data', 'XDG_DATA_HOME', HOMEDIR / '.local' / 'share'),
-    'config': XdgPath('config', 'XDG_CONFIG_HOME', HOMEDIR / '.config'), 
+    'config': XdgPath('config', 'XDG_CONFIG_HOME', HOMEDIR / '.config'),
 }
 
 
@@ -41,7 +44,6 @@ def get_data_path(**kwargs: str) -> pathlib.Path:
 
 def get_default_comeback_file_path() -> pathlib.Path:
     return pathlib.Path.home() / '.comeback'
-
 
 
 DEFAULT_COMEBACK_FILE = get_default_comeback_file_path()
