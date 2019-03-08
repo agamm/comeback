@@ -4,11 +4,12 @@ import platform
 from shutil import which
 import shlex
 import subprocess
-from typing import Any, cast, Dict, Iterator, List, Optional, Tuple, Union
+from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
 
 
 RUN_STATUS = Tuple[bool, Optional[str]]
 CMD_PARAMS = Union[List[str], str]
+
 
 def get_platform() -> str:
     platforms = {
