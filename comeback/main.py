@@ -31,8 +31,8 @@ def parse_args(args: Optional[str]) -> Dict[str, str]:
         return {}
 
     parsed_args = {}
-    for arg in args.split(","):
-        key_value = arg.split("=")
+    for arg in args.split(','):
+        key_value = arg.split('=')
         parsed_args[key_value[0]] = key_value[1]
 
     return parsed_args
@@ -92,7 +92,7 @@ def run_config(config: Dict[str, Any]) -> None:
 def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     try:
         with open(config_path, 'r') as fd:
-            return yaml.load(fd)
+            return yaml.safe_load(fd)
     except IOError as e:
         click.echo(f'Could not read file {config_path} because {e}')
     except yaml.YAMLError as exc:

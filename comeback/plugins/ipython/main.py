@@ -1,5 +1,4 @@
-import pathlib
-from typing import List, Optional, Set
+from typing import List, Set
 
 from comeback import utils
 
@@ -19,6 +18,7 @@ def check_plugin(module_names: List[str]) -> utils.RUN_STATUS:
     if bad_modules:
         return False, f'Can\'t find modules: {bad_modules}.'
     return True, None
+
 
 def get_launch_command(module_names: List[str]) -> str:
     imports = ''.join(f'import {module};' for module in module_names)

@@ -1,5 +1,5 @@
-from typing import Optional
 import webbrowser
+from typing import Optional
 
 from comeback import utils
 
@@ -37,4 +37,3 @@ def run_plugin(url: str) -> utils.RUN_STATUS:
         webbrowser.open_new_tab(url)
 
     return True, None
-
