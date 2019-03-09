@@ -158,7 +158,7 @@ def list_last_used() -> Tuple[List[Dict], str]:
 
 
 def choose_last_used() -> None:
-    click.echo("Please choose one of the following .comeback recipes:")
+    click.echo('Please choose one of the following .comeback recipes:')
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
     index = int(input("> "))
