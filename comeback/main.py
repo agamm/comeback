@@ -157,8 +157,8 @@ def get_last_used() -> List[Dict[str, Any]]:
 def list_last_used() -> Tuple[List[Dict[str, Any]], str]:
     sorted_last_used = get_last_used()
     sorted_last_str = ""
-    for index, recpie in enumerate(sorted_last_used):
-        sorted_last_str += f'{index + 1} - {recpie["path"]} \n'
+    for index, recipe in enumerate(sorted_last_used):
+        sorted_last_str += f'{index + 1} - {recipe["path"]} \n'
 
     return sorted_last_used, sorted_last_str
 
