@@ -41,9 +41,9 @@ def run_windows(cwd: str) -> utils.RUN_STATUS:
     if not pyc32 and pyc64:
         return False, 'pycharm\'s exe files are not found.'
     elif pyc64:
-        utils.run([str(pycharm_exe64), str(cwd)], use_shell=False, detach = False)
+        utils.run([str(pycharm_exe64), str(cwd)], use_shell=False, detach=False)
     else:
-        utils.run([str(pycharm_exe64), str(cwd)], use_shell=False, detach = False)
+        utils.run([str(pycharm_exe64), str(cwd)], use_shell=False, detach=False)
 
     return True, 'Found pycharm'
 

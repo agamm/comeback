@@ -106,8 +106,8 @@ def get_config_path() -> pathlib.Path:
         return cwd_path
 
     last_comeback_used = config.get_last_comeback()
-    verbose_echo("No .comeback file found in the current directory, " +
-                 "starting last session found ({}).".format(last_comeback_used))
+    verbose_echo('No .comeback file found in the current directory, ' +
+                 f'starting last session found ({last_comeback_used})')
     return last_comeback_used
 
 
