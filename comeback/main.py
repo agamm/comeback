@@ -2,7 +2,7 @@ import importlib
 import pathlib
 import sys
 from types import ModuleType
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple, List
 
 import click
 import yaml
@@ -111,9 +111,12 @@ def get_config_path() -> pathlib.Path:
     return last_comeback_used
 
 
-def load_config() -> None:
+def load_config(config_path = None) -> None:
     verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
-    config_path = get_config_path()
+
+    if not config_path:
+        config_path = get_config_path()
+
     config = read_config_file(config_path)
 
     if config is None:
@@ -141,12 +144,37 @@ def main() -> None:
     load_config()
 
 
+def list_last_used() -> Tuple[List[Dict], str]:
+    last_used = []
+    for last_used_path in config.get_recent_comebacks(5):
+        last_used.append({'path': last_used_path[0],
+                          'last_used': last_used_path[1]})
+
+    sorted_last_used = sorted(last_used, key=lambda k: k['last_used'],
+                              reverse=True)
+
+    return sorted_last_used, "\n".join(f'{i} - {c["path"]}' for i, c in
+                     enumerate(sorted_last_used))
+
+
+def choose_last_used() -> None:
+    click.echo("Please choose one of the following .comeback recipes:")
+    last_used, last_used_str = list_last_used()
+    click.echo(last_used_str)
+    index = int(input("> "))
+    path = last_used[index]['path']
+    load_config(path)
+    config.add_comeback_path(path)
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 @click.option('-i', '--init', is_flag=True, default=False,
               help='Generate a blank .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
-def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
+@click.option('-l', '--last_used', is_flag=True, help='Show recently used' +
+                                                      '.comeback recipes.')
+def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) -> None:
     global IS_VERBOSE
     IS_VERBOSE = verbose
 
@@ -156,6 +184,10 @@ def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
 
     if init:
         create_comeback_file_here()
+        return
+
+    if last_used:
+        choose_last_used()
         return
 
     main()
