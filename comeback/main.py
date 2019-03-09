@@ -180,7 +180,8 @@ def choose_last_used() -> None:
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
 @click.option('-l', '--last_used', is_flag=True, help='Show recently used' +
                                                       '.comeback recipes.')
-def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) -> None:
+def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
+        -> None:
     global IS_VERBOSE
     IS_VERBOSE = verbose
 
