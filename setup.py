@@ -1,5 +1,9 @@
 from setuptools import setup
 
+
+DOWNLOAD_URL = 'https://github.com/agamm/comeback/archive/v0.0.2-alpha.tar.gz'
+
+
 setup(
     name='comeback',
     packages=['comeback'],
@@ -9,7 +13,7 @@ setup(
     url='https://github.com/agamm/comeback',
     keywords=['autorun', 'comeback', 'project restoration', 'auto open'],
     py_modules=['src'],
-    license="MIT",
+    license='MIT',
     install_requires=[
         'click',
         'pyyaml',
@@ -17,7 +21,7 @@ setup(
     entry_points={
         'console_scripts': ['comeback=comeback.main:cli'],
     },
-    download_url='https://github.com/agamm/comeback/archive/v0.0.2-alpha.tar.gz',
+    download_url=DOWNLOAD_URL,
     classifiers=[
         'Development Status :: 3 - Alpha',
         # "3 - Alpha", "4 - Beta" or "5 - Production/Stable"

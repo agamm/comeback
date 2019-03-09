@@ -3,12 +3,13 @@ import json
 import operator
 import pathlib
 import time
-from typing import (
-    Any, Dict, Iterator, Optional, Tuple, Union
-)
+from typing import Any, Dict, Iterator, Optional, Tuple, Union
 
 
 from comeback import paths
+
+
+COMEBACKS = Iterator[Tuple[str, int]]
 
 
 def create_path_entity(filepath: Union[str, pathlib.Path]) -> Dict[str, int]:
@@ -49,8 +50,7 @@ def add_comeback_path(path: Optional[Union[pathlib.Path, str]] = None) -> None:
     write_comeback_paths(paths_to_write)
 
 
-def get_recent_comebacks(max_results: Optional[int] = None)\
-                         -> Iterator[Tuple[str, int]]:
+def get_recent_comebacks(max_results: Optional[int] = None) -> COMEBACKS:
     comeback_files = get_comeback_paths()
     date_getter = operator.itemgetter(1)
     sorted_ = sorted(comeback_files.items(), key=date_getter, reverse=True)

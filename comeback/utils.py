@@ -1,9 +1,9 @@
 import importlib
 import pathlib
 import platform
-from shutil import which
 import shlex
 import subprocess
+from shutil import which
 from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
 
 
@@ -66,7 +66,7 @@ def get_dirs_in_dir(dirpath: str) -> Iterator[pathlib.Path]:
 
 def read_file(path: pathlib.Path) -> str:
     """Read a file should be a pathlib Path object"""
-    data = ""
+    data = ''
     with path.open('r') as f:
         data = f.read()
 
@@ -75,5 +75,5 @@ def read_file(path: pathlib.Path) -> str:
 
 def report_issue() -> str:
     """Used when errors are really f*cked up"""
-    return 'report an issue please? \
-        ( https://github.com/agamm/comeback/issues )'
+    return ('Report an issue please?'
+            '( https://github.com/agamm/comeback/issues )')

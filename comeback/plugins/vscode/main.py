@@ -1,13 +1,13 @@
 import pathlib
 import subprocess
-from typing import cast, Optional
+from typing import Optional
 
 from comeback import utils
 
 
 def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
-    if 'cwd' is None:
+    if cwd is None:
         return False, 'cwd parameter is not set.'
 
     if not utils.is_binary_exists('code'):
