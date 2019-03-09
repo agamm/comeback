@@ -53,10 +53,10 @@ def run_linux(cwd: str, pycharm_path: Optional[str]) -> utils.RUN_STATUS:
         if not pycharm_path:
             return (False,
                     'PyCharm not found, please provide pycharm_path option')
-        utils.run([pycharm_path, cwd], use_shell=False)
+        utils.run([pycharm_path, cwd], use_shell=True)
         return True, 'Found pycharm'
 
-    utils.run(['pycharm-community', cwd], use_shell=False)
+    utils.run(['pycharm-community', cwd], use_shell=True)
     return True, 'Found pycharm'
 
 
