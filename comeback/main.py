@@ -111,7 +111,7 @@ def get_config_path() -> pathlib.Path:
     return last_comeback_used
 
 
-def load_config(config_path = None) -> None:
+def load_config(config_path: Optional[pathlib.Path] = None) -> None:
     verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
 
     if not config_path:
@@ -144,17 +144,23 @@ def main() -> None:
     load_config()
 
 
-def list_last_used() -> Tuple[List[Dict], str]:
-    last_used = []
+def get_last_used() -> List[Dict[str, Any]]:
+    last_used_list = []
     for last_used_path in config.get_recent_comebacks(5):
-        last_used.append({'path': last_used_path[0],
-                          'last_used': last_used_path[1]})
+        path, last_used = last_used_path
+        last_used_list.append({'path': path, 'last_used': last_used})
 
-    sorted_last_used = sorted(last_used, key=lambda k: k['last_used'],
-                              reverse=True)
+    return sorted(last_used_list, key=lambda k: k['last_used'],
+                  reverse=True)
 
-    return sorted_last_used, "\n".join(f'{i} - {c["path"]}' for i, c in
-                     enumerate(sorted_last_used))
+
+def list_last_used() -> Tuple[List[Dict[str, Any]], str]:
+    sorted_last_used = get_last_used()
+    sorted_last_str = ""
+    for index, recpie in enumerate(sorted_last_used):
+        sorted_last_str += f'{index + 1} - {recpie["path"]} \n'
+
+    return sorted_last_used, sorted_last_str
 
 
 def choose_last_used() -> None:
@@ -162,7 +168,7 @@ def choose_last_used() -> None:
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
     index = int(input("> "))
-    path = last_used[index]['path']
+    path = last_used[index - 1]['path']
     load_config(path)
     config.add_comeback_path(path)
 
