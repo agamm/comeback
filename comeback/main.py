@@ -11,7 +11,6 @@ from comeback import config
 from comeback import paths
 from comeback import plugins
 
-
 exit = sys.exit
 
 IS_VERBOSE = False
@@ -103,8 +102,13 @@ def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
 def get_config_path() -> pathlib.Path:
     cwd_path = paths.CURRENT_DIR / '.comeback'
     if cwd_path.exists():
+        config.add_comeback_path(cwd_path)
         return cwd_path
-    return config.get_last_comeback()
+
+    last_comeback_used = config.get_last_comeback()
+    verbose_echo("No .comeback file found in the current directory, " +
+                 "starting last session found ({}).".format(last_comeback_used))
+    return last_comeback_used
 
 
 def load_config() -> None:
@@ -113,6 +117,9 @@ def load_config() -> None:
     config = read_config_file(config_path)
 
     if config is None:
+        verbose_echo(
+            'Error: no .comeback file found in the current directory nor in ' +
+            'previous sessions.')
         return None
 
     run_config(config)
