@@ -75,5 +75,5 @@ def read_file(path: pathlib.Path) -> str:
 
 def report_issue() -> str:
     """Used when errors are really f*cked up"""
-    return ('Report an issue please?'
+    return ('Report an issue please? '
             '( https://github.com/agamm/comeback/issues )')
