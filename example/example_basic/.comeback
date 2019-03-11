@@ -1,4 +1,6 @@
 vscode: 
   cwd: ~/dev/myproject
+sublime: 
+  cwd: ~/dev/myproject
 chrome:
   url: http://localhost:8080/
