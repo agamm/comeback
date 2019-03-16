@@ -3,15 +3,17 @@ import pytest
 from comeback import utils
 from tests import test_helper
 
+
 def test_is_binary_exists():
-    assert(utils.is_binary_exists('thisdoesntexistihope') is False)
+    assert (utils.is_binary_exists('thisdoesntexistihope') is False)
 
     if utils.get_platform() == "windows":
-        assert(utils.is_binary_exists('python.exe') is True)
+        assert (utils.is_binary_exists('python.exe') is True)
+
 
 def test_is_module_exists():
-    assert(utils.is_module_exists('nomoduleinthisname') is False)
-    assert(utils.is_module_exists('sys') is True)
+    assert (utils.is_module_exists('nomoduleinthisname') is False)
+    assert (utils.is_module_exists('sys') is True)
 
 
 def test_read_file(tmp_path):
