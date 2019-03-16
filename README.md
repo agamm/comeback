@@ -13,6 +13,8 @@
 
 **Comeback** - **Project restoration in one command, auto open everything!** comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
 
+![comeback_intro](https://user-images.githubusercontent.com/1269911/54078611-ab3dd680-42d3-11e9-8066-fabcda7212ac.gif)
+
 ## How much time does this save?
 If it takes you an average of 2 minutes to open all of your project's tools, then you waste about 8.5 hours a year per project, not to mention the friction it adds to start really working :O
 

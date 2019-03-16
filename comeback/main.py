@@ -2,7 +2,7 @@ import importlib
 import pathlib
 import sys
 from types import ModuleType
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple, List
 
 import click
 import yaml
@@ -111,9 +111,12 @@ def get_config_path() -> pathlib.Path:
     return last_comeback_used
 
 
-def load_config() -> None:
+def load_config(config_path: Optional[pathlib.Path] = None) -> None:
     verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
-    config_path = get_config_path()
+
+    if not config_path:
+        config_path = get_config_path()
+
     config = read_config_file(config_path)
 
     if config is None:
@@ -141,12 +144,44 @@ def main() -> None:
     load_config()
 
 
+def get_last_used() -> List[Dict[str, Any]]:
+    last_used_list = []
+    for last_used_path in config.get_recent_comebacks(5):
+        path, last_used = last_used_path
+        last_used_list.append({'path': path, 'last_used': last_used})
+
+    return sorted(last_used_list, key=lambda k: k['last_used'],
+                  reverse=True)
+
+
+def list_last_used() -> Tuple[List[Dict[str, Any]], str]:
+    sorted_last_used = get_last_used()
+    sorted_last_str = ""
+    for index, recipe in enumerate(sorted_last_used):
+        sorted_last_str += f'{index + 1} - {recipe["path"]} \n'
+
+    return sorted_last_used, sorted_last_str
+
+
+def choose_last_used() -> None:
+    click.echo('Please choose one of the following .comeback recipes:')
+    last_used, last_used_str = list_last_used()
+    click.echo(last_used_str)
+    index = int(input("> "))
+    path = last_used[index - 1]['path']
+    load_config(path)
+    config.add_comeback_path(path)
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 @click.option('-i', '--init', is_flag=True, default=False,
               help='Generate a blank .comeback configuration file.')
 @click.option('-v', '--verbose', is_flag=True, help='Show more output.')
-def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
+@click.option('-l', '--last_used', is_flag=True, help='Show recently used' +
+                                                      '.comeback recipes.')
+def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
+        -> None:
     global IS_VERBOSE
     IS_VERBOSE = verbose
 
@@ -156,6 +191,10 @@ def cli(ctx: click.Context, init: bool, verbose: bool) -> None:
 
     if init:
         create_comeback_file_here()
+        return
+
+    if last_used:
+        choose_last_used()
         return
 
     main()
