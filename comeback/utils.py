@@ -4,7 +4,7 @@ import platform
 import shlex
 import subprocess
 from shutil import which
-from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 RUN_STATUS = Tuple[bool, Optional[str]]
@@ -56,12 +56,6 @@ def is_binary_exists(bin_name: str) -> bool:
 def is_module_exists(module_name: str) -> bool:
     spec = importlib.util.find_spec(module_name)
     return spec is not None
-
-
-def get_dirs_in_dir(dirpath: str) -> Iterator[pathlib.Path]:
-    """Returns 1st level of dirs in a path"""
-    all_files = pathlib.Path(dirpath).glob('*')
-    return filter(pathlib.Path.is_dir, all_files)
 
 
 def read_file(path: pathlib.Path) -> str:
