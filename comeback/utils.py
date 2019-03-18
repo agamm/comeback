@@ -39,7 +39,7 @@ def _get_detach_flags() -> Dict[str, Any]:
     return kwargs
 
 
-def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> bool:
+def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> None:
     cmd = _format_command(cmd)
 
     kwargs = {}
@@ -47,7 +47,6 @@ def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> bool:
         kwargs.update(_get_detach_flags())
 
     subprocess.Popen(cmd, shell=use_shell, **kwargs)
-    return True
 
 def is_binary_exists(bin_name: str) -> bool:
     return which(bin_name) is not None

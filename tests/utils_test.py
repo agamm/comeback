@@ -11,8 +11,8 @@ def test_run():
     with pytest.raises(FileNotFoundError):
         res = utils.run('cd')
 
-    res = utils.run(['cd'], use_shell=True)
-    assert (res == True)
+    with pytest.raises(None):
+        utils.run(None, use_shell=True)
 
 
 def test__format_command():
