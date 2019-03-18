@@ -87,6 +87,11 @@ You may want to see the [CONTRIBUTING.md](https://github.com/agamm/comeback/blob
  - Use application specific settings temporarily to open the application in the desired state (thanks @MaorCore)
  - Tests, tests and tests.
  
+## Testing
+`pytest tests`  
+Coverage:  
+`pytest --cov=comeback tests` (see [pytest-cov](https://github.com/pytest-dev/pytest-cov))
+ 
 ## Contributing
 ![uncle-sam-wants-you](https://user-images.githubusercontent.com/1269911/53686114-de102980-3d2b-11e9-9a30-be27ec3412a7.jpg)  
 Sammy wants you to help :) you can be one of our [active contributors](https://github.com/agamm/comeback/graphs/contributors).   

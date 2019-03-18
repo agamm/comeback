@@ -4,6 +4,31 @@ from comeback import utils
 from tests import test_helper
 
 
+def test_run():
+    with pytest.raises(AssertionError):
+        utils.run(None)
+
+    with pytest.raises(FileNotFoundError):
+        res = utils.run('cd')
+
+    res = utils.run(['cd'], use_shell=True)
+    assert(res == True)
+
+
+
+def test__format_command():
+    with pytest.raises(AssertionError):
+        utils._format_command({"a": 123})
+
+    commands = utils._format_command("")
+    assert (commands == [])
+
+    commands = utils._format_command("a b c")
+    assert(commands == ["a", "b", "c"])
+
+    commands = utils._format_command("a b=123,c=321 e")
+    assert (commands == ["a", "b=123,c=321", "e"])
+
 def test_is_binary_exists():
     assert (utils.is_binary_exists('thisdoesntexistihope') is False)
 
@@ -18,7 +43,7 @@ def test_is_module_exists():
 
 def test_read_file(tmp_path):
     # Test no parameter
-    with pytest.raises(Exception) as e_info:
+    with pytest.raises(AttributeError) as e_info:
         utils.read_file('')
 
     # Create a dummy file
