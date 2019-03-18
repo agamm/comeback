@@ -4,13 +4,29 @@ from comeback import utils
 from tests import test_helper
 
 
+def test__get_detach_flags():
+    old_get_platform = utils.get_platform
+
+    # Other than windows check
+    utils.get_platform = lambda: 'linux'
+    flags = utils._get_detach_flags()
+    assert (flags['start_new_session'])
+
+    # Windows check
+    utils.get_platform = lambda: 'windows'
+    flags = utils._get_detach_flags()
+    flags_win = 0x00000008 | 0x00000200
+    assert (flags['creationflags'] == flags_win)
+
+    utils.get_platform = old_get_platform
+
+
 def test_run():
     with pytest.raises(AssertionError):
         utils.run(None)
 
     with pytest.raises(FileNotFoundError):
         res = utils.run('cd')
-
 
 
 def test__format_command():
