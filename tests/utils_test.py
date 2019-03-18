@@ -12,8 +12,7 @@ def test_run():
         res = utils.run('cd')
 
     res = utils.run(['cd'], use_shell=True)
-    assert(res == True)
-
+    assert (res == True)
 
 
 def test__format_command():
@@ -24,10 +23,11 @@ def test__format_command():
     assert (commands == [])
 
     commands = utils._format_command("a b c")
-    assert(commands == ["a", "b", "c"])
+    assert (commands == ["a", "b", "c"])
 
     commands = utils._format_command("a b=123,c=321 e")
     assert (commands == ["a", "b=123,c=321", "e"])
+
 
 def test_is_binary_exists():
     assert (utils.is_binary_exists('thisdoesntexistihope') is False)
