@@ -31,22 +31,22 @@ def test_run():
 
 def test__format_command():
     with pytest.raises(AssertionError):
-        utils._format_command({"a": 123})
+        utils._format_command({'a': 123})
 
-    commands = utils._format_command("")
+    commands = utils._format_command('')
     assert (commands == [])
 
-    commands = utils._format_command("a b c")
-    assert (commands == ["a", "b", "c"])
+    commands = utils._format_command('a b c')
+    assert (commands == ['a', 'b', 'c'])
 
-    commands = utils._format_command("a b=123,c=321 e")
-    assert (commands == ["a", "b=123,c=321", "e"])
+    commands = utils._format_command('a b=123,c=321 e')
+    assert (commands == ['a', 'b=123,c=321', 'e'])
 
 
 def test_is_binary_exists():
     assert (utils.is_binary_exists('thisdoesntexistihope') is False)
 
-    if utils.get_platform() == "windows":
+    if utils.get_platform() == 'windows':
         assert (utils.is_binary_exists('python.exe') is True)
 
 
