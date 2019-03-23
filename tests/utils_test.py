@@ -67,9 +67,3 @@ def test_read_file(tmp_path):
     # Acctual test
     result_content = utils.read_file(test_file)
     assert (result_content == test_content)
-
-
-def test_report_issue():
-    exptected_string = 'Report an issue please?' + \
-                       ' ( https://github.com/agamm/comeback/issues )'
-    assert utils.report_issue() == exptected_string

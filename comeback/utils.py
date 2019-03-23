@@ -66,7 +66,7 @@ def read_file(path: pathlib.Path) -> str:
     return data
 
 
-def report_issue() -> str:
+def report_issue() -> str:  # pragma: no cover
     """Used when errors are really f*cked up"""
     return ('Report an issue please? '
             '( https://github.com/agamm/comeback/issues )')
