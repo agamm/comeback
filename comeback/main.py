@@ -99,7 +99,7 @@ def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     except IOError as e:
         click.echo(f'Could not read file {config_path} because {e}')
     except yaml.YAMLError as exc:
-        click.echo(exc)
+        click.echo("YAML Error: " + str(exc))
     return None
 
 
@@ -110,6 +110,7 @@ def get_config_path() -> pathlib.Path:
         return cwd_path
 
     last_comeback_used = config.get_last_comeback()
+
     verbose_echo('No .comeback file found in the current directory, ' +
                  f'starting last session found ({last_comeback_used})')
     return last_comeback_used
@@ -117,11 +118,10 @@ def get_config_path() -> pathlib.Path:
 
 def load_config(config_path: Optional[pathlib.Path] = None) -> None:
     verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
-
     if not config_path:
         config_path = get_config_path()
 
-    config = read_config_file(config_path)
+    config = read_config_file(config_path.name)
 
     if config is None:
         verbose_echo(
@@ -171,10 +171,10 @@ def choose_last_used() -> None:
     click.echo('Please choose one of the following .comeback recipes:')
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
-    index = int(input("> "))
-    path = last_used[index - 1]['path']
-    load_config(path)
-    config.add_comeback_path(path)
+    index = int(input("> ")) # pragma: no cover
+    path = last_used[index - 1]['path'] # pragma: no cover
+    load_config(path) # pragma: no cover
+    config.add_comeback_path(path) # pragma: no cover
 
 
 @click.group(invoke_without_command=True)
@@ -199,7 +199,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
 
     if last_used:
         choose_last_used()
-        return
+        return # pragma: no cover
 
     main()
 

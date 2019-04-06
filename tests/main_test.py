@@ -104,10 +104,10 @@ def test_call_plugin():
     assert ('Missing argument "PLUGIN"' in result.stdout)
 
 
-def test_comback_file_mock(tmp_path):
+def test_comeback_file_mock(tmp_path):
     runner = CliRunner()
     with runner.isolated_filesystem():
-        paths.CURRENT_DIR = pathlib.Path(os.getcwd())
+        paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
         with open('.comeback', 'w') as f:
             yaml.dump({'mock': {'print': 'wowow'}}, f,
                       default_flow_style=False)
@@ -116,3 +116,50 @@ def test_comback_file_mock(tmp_path):
         assert (result.exit_code == 0)
         assert ("Successfully" in result.stdout)
         assert ("b'wowow\\n'" in result.stdout)
+
+
+def test_comeback_file_noplugin(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
+        with open('.comeback', 'w') as f:
+            yaml.dump({'__NOPLUGINNAMEDLIKETHIS__': {'print': 'wowow'}}, f,
+                      default_flow_style=False)
+
+        result = runner.invoke(main.cli, '-v')
+        assert (result.exit_code == 0)
+        assert ("Unknown plugin" in result.stdout)
+
+
+def test_comeback_file_bad_yaml(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
+        with open('.comeback', 'w') as f:
+            f.write("p:\n231\n")
+
+        result = runner.invoke(main.cli, '-v')
+        assert (result.exit_code == 0)
+        assert ("YAML Error" in result.output)
+
+
+def test_comeback_file_already_exists_comeback_file(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
+        with open('.comeback', 'w') as f:
+            yaml.dump({'mock': {'print': 'wowow'}}, f,
+                      default_flow_style=False)
+
+        result = runner.invoke(main.cli, '-v --init')
+        assert (result.exit_code == 0)
+        assert ("file already exists here" in result.stdout)
+
+
+def test_comeback_subcommand(tmp_path):
+    runner = CliRunner()
+
+    result = runner.invoke(main.cli, ['-v', 'run', 'mock', 'print=123'])
+    assert (result.exit_code == 0)
+    assert ("Invoking subcommand" in result.output)
+    assert ("b'123\\n'" in result.stdout)
