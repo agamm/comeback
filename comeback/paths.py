@@ -42,6 +42,11 @@ def get_data_path(**kwargs: str) -> pathlib.Path:
     return get_path('data', **kwargs)
 
 
+def get_default_comeback_file_path() -> pathlib.Path:
+    return pathlib.Path.home() / '.comeback'
+
+
+DEFAULT_COMEBACK_FILE = get_default_comeback_file_path()
 DATA_DIR = get_data_path()
 CONFIG_DIR = get_config_path()
 PATHS_DATA_FILE = get_data_path(filename='paths')
