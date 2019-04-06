@@ -25,13 +25,17 @@ def get_probable_project_name() -> str:
     return paths.CURRENT_DIR.name
 
 
-def parse_args(args: Optional[str]) -> Dict[str, str]:
+def parse_args(args: Optional[str] = None) -> Dict[str, str]:
     if not args:
         return {}
 
     parsed_args = {}
     for arg in args.split(','):
         key_value = arg.split('=')
+        if len(key_value) < 2:
+            raise ValueError(
+                'There was no assignment supplied to args' +
+                ' (ie should look like param=value,param2=value2')
         parsed_args[key_value[0]] = key_value[1]
 
     return parsed_args
@@ -66,7 +70,7 @@ def is_plugin_exists(plugin_name: str) -> bool:
 def load_plugin(plugin_name: str, plugin_params: Dict[str, Any]) -> None:
     if not plugin_name:
         click.echo(f'Can\'t load a plugin without a plugin name')
-        exit()
+        exit(1)
 
     # Fix plugins that don't require params
     if not plugin_params:

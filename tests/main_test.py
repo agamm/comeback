@@ -1,7 +1,13 @@
+import importlib
+import os
+
 import pytest
+import yaml
 from click.testing import CliRunner
 import comeback.main as main
 import pathlib
+from comeback import plugins
+from comeback import paths
 
 
 def test_help_message():
@@ -14,6 +20,17 @@ def test_help_message():
     assert ('-v, --verbose' in result.output)
     assert ('-l, --last_used' in result.output)
     assert ('--help' in result.output)
+
+
+def test_parse_args():
+    assert (main.parse_args() == {})
+    assert (main.parse_args('a=123') == {'a': '123'})
+    assert (main.parse_args('a=123,b=321') == {'a': '123', 'b': '321'})
+    with pytest.raises(ValueError):
+        assert (main.parse_args(',') == {})
+        assert (main.parse_args(',,') == {})
+        assert (main.parse_args(',=') == {})
+        assert (main.parse_args('a=321,=') == {})
 
 
 def test_no_comeback():
@@ -53,3 +70,49 @@ def test_init():
 
     # Remove the file, as we don't really need it anymore (poor child)
     pathlib.Path("./.comeback").unlink()
+
+
+def test_is_plugin_exists():
+    assert (main.is_plugin_exists("mock"))
+    assert (not main.is_plugin_exists("__NOPLUGINNAMEDLIKETHIS__"))
+
+
+def test_call_plugin():
+    runner = CliRunner()
+    result = runner.invoke(main.run, ['mock', 'print=321'])
+    assert (result.exit_code == 0)
+    assert ("321" in result.stdout)
+
+    with pytest.raises(ModuleNotFoundError):
+        runner.invoke(main.run, ['__NOPLUGINNAMEDLIKETHIS__', 'r=312'],
+                      catch_exceptions=False)
+
+    result = runner.invoke(main.run, ['mock', 'notprint=312'])
+    assert (result.exit_code == 0)
+    assert ("unexpected keyword argument 'notprint'" in result.output)
+
+    result = runner.invoke(main.run, ['mock'])
+    assert (result.exit_code == 0)
+    assert ("expected str" in result.output)
+
+    result = runner.invoke(main.run, ['mock', 'print=test'])
+    assert (result.exit_code == 0)
+    assert ("we got a test string" in result.stdout)
+
+    result = runner.invoke(main.run, [])
+    assert (result.exit_code == 2)
+    assert ('Missing argument "PLUGIN"' in result.stdout)
+
+
+def test_comback_file_mock(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        paths.CURRENT_DIR = pathlib.Path(os.getcwd())
+        with open('.comeback', 'w') as f:
+            yaml.dump({'mock': {'print': 'wowow'}}, f,
+                      default_flow_style=False)
+
+        result = runner.invoke(main.cli, '-v')
+        assert (result.exit_code == 0)
+        assert ("Successfully" in result.stdout)
+        assert ("b'wowow\\n'" in result.stdout)
