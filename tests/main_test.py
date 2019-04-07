@@ -80,7 +80,7 @@ def test_is_plugin_exists():
 # TODO: See issue: https://github.com/agamm/comeback/issues/43
 # def test_call_plugin():
 #     runner = CliRunner()
-#     result = runner.invoke(main.run, ['mock', 'print=321'])
+#     result = runner.invoke(main.run, ['mock', 'value=321'])
 #     assert (result.exit_code == 0)
 #     assert ("321" in result.stdout)
 #
@@ -88,7 +88,7 @@ def test_is_plugin_exists():
 #         runner.invoke(main.run, ['__NOPLUGINNAMEDLIKETHIS__', 'r=312'],
 #                       catch_exceptions=False)
 #
-#     result = runner.invoke(main.run, ['mock', 'notprint=312'])
+#     result = runner.invoke(main.run, ['mock', 'notvalue=312'])
 #     assert (result.exit_code == 0)
 #     assert ("unexpected keyword argument 'notprint'" in result.output)
 #
@@ -96,7 +96,7 @@ def test_is_plugin_exists():
 #     assert (result.exit_code == 0)
 #     assert ("expected str" in result.output)
 #
-#     result = runner.invoke(main.run, ['mock', 'print=test'])
+#     result = runner.invoke(main.run, ['mock', 'value=test'])
 #     assert (result.exit_code == 0)
 #     assert ("we got a test string" in result.stdout)
 #
@@ -110,7 +110,7 @@ def test_is_plugin_exists():
 #     with runner.isolated_filesystem():
 #         paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
 #         with open('.comeback', 'w') as f:
-#             yaml.dump({'mock': {'print': 'wowow'}}, f,
+#             yaml.dump({'mock': {'value': 'wowow'}}, f,
 #                       default_flow_style=False)
 #
 #         result = runner.invoke(main.cli, '-v')
@@ -124,7 +124,7 @@ def test_is_plugin_exists():
 #     with runner.isolated_filesystem():
 #         paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
 #         with open('.comeback', 'w') as f:
-#             yaml.dump({'__NOPLUGINNAMEDLIKETHIS__': {'print': 'wowow'}}, f,
+#             yaml.dump({'__NOPLUGINNAMEDLIKETHIS__': {'value': 'wowow'}}, f,
 #                       default_flow_style=False)
 #
 #         result = runner.invoke(main.cli, '-v')
@@ -149,7 +149,7 @@ def test_is_plugin_exists():
 #     with runner.isolated_filesystem():
 #         paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
 #         with open('.comeback', 'w') as f:
-#             yaml.dump({'mock': {'print': 'wowow'}}, f,
+#             yaml.dump({'mock': {'value': 'wowow'}}, f,
 #                       default_flow_style=False)
 #
 #         result = runner.invoke(main.cli, '-v --init')
@@ -160,7 +160,7 @@ def test_is_plugin_exists():
 # def test_comeback_subcommand(tmp_path):
 #     runner = CliRunner()
 #
-#     result = runner.invoke(main.cli, ['-v', 'run', 'mock', 'print=123'])
+#     result = runner.invoke(main.cli, ['-v', 'run', 'mock', 'value=123'])
 #     assert (result.exit_code == 0)
 #     assert ("Invoking subcommand" in result.output)
 #     assert ("b'123\\n'" in result.stdout)

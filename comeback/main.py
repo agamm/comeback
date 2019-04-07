@@ -171,10 +171,10 @@ def choose_last_used() -> None:
     click.echo('Please choose one of the following .comeback recipes:')
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
-    index = int(input("> ")) # pragma: no cover
-    path = last_used[index - 1]['path'] # pragma: no cover
-    load_config(path) # pragma: no cover
-    config.add_comeback_path(path) # pragma: no cover
+    index = int(input("> "))  # pragma: no cover
+    path = last_used[index - 1]['path']  # pragma: no cover
+    load_config(path)  # pragma: no cover
+    config.add_comeback_path(path)  # pragma: no cover
 
 
 @click.group(invoke_without_command=True)
@@ -199,7 +199,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
 
     if last_used:
         choose_last_used()
-        return # pragma: no cover
+        return  # pragma: no cover
 
     main()
 

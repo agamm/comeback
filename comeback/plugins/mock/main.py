@@ -13,10 +13,10 @@ def check_plugin(print: Optional[str] = None) -> utils.RUN_STATUS:
     return True, None
 
 
-def run_plugin(print: Optional[str] = None) -> utils.RUN_STATUS:
-    directory = pathlib.Path(print).expanduser()
+def run_plugin(value: Optional[str] = None) -> utils.RUN_STATUS:
+    directory = pathlib.Path(value).expanduser()
     r = subprocess.check_output(f'echo {directory}', shell=False)
     sys.stdout.write(str(r))
-    if print == "test":
+    if value == "test":
         return False, 'we got a test string'
     return True, None
