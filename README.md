@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/ambv/black/blob/master/LICENSE" alt="License: MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License" /></a>
 <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/comeback.svg">
-<img src="https://travis-ci.org/agamm/comeback.svg?branch=master" alt="Testing" />
+<a href="https://travis-ci.org/agamm/comeback"><img src="https://travis-ci.org/agamm/comeback.svg?branch=master" alt="Testing" /></a>
 </p>
 
 **Comeback** - **Project restoration in one command, auto open everything!** comeback helps you open your project's ide/browser/terminal (and more!) all at once - so you wouldn't have to do it manually. Get right back to the business of actually developing. 
