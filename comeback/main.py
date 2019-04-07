@@ -99,7 +99,7 @@ def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     except IOError as e:
         click.echo(f'Could not read file {config_path} because {e}')
     except yaml.YAMLError as exc:
-        click.echo("YAML Error: " + str(exc))
+        click.echo('YAML Error: ' + str(exc))
     return None
 
 
@@ -160,7 +160,7 @@ def get_last_used() -> List[Dict[str, Any]]:
 
 def list_last_used() -> Tuple[List[Dict[str, Any]], str]:
     sorted_last_used = get_last_used()
-    sorted_last_str = ""
+    sorted_last_str = ''
     for index, recipe in enumerate(sorted_last_used):
         sorted_last_str += f'{index + 1} - {recipe["path"]} \n'
 
@@ -171,7 +171,7 @@ def choose_last_used() -> None:
     click.echo('Please choose one of the following .comeback recipes:')
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
-    index = int(input("> "))  # pragma: no cover
+    index = int(input('> '))  # pragma: no cover
     path = last_used[index - 1]['path']  # pragma: no cover
     load_config(path)  # pragma: no cover
     config.add_comeback_path(path)  # pragma: no cover

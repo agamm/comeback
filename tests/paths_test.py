@@ -21,8 +21,8 @@ def create_tmp_env_xdg(is_data=True):
 
 
 def restore_env_xdg(data_value, config_value):
-    os.environ['XDG_DATA_HOME'] = data_value or ""
-    os.environ['XDG_CONFIG_HOME'] = config_value or ""
+    os.environ['XDG_DATA_HOME'] = data_value or ''
+    os.environ['XDG_CONFIG_HOME'] = config_value or ''
 
 
 def test_get_dir_name_type():

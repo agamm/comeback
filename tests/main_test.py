@@ -66,15 +66,15 @@ def test_init():
     runner = CliRunner()
     result = runner.invoke(main.cli, ['-i'])
     assert (result.exit_code == 0)
-    assert (pathlib.Path("./.comeback").is_file())
+    assert (pathlib.Path('./.comeback').is_file())
 
     # Remove the file, as we don't really need it anymore (poor child)
-    pathlib.Path("./.comeback").unlink()
+    pathlib.Path('./.comeback').unlink()
 
 
 def test_is_plugin_exists():
-    assert (main.is_plugin_exists("mock"))
-    assert (not main.is_plugin_exists("__NOPLUGINNAMEDLIKETHIS__"))
+    assert (main.is_plugin_exists('mock'))
+    assert (not main.is_plugin_exists('__NOPLUGINNAMEDLIKETHIS__'))
 
 
 # TODO: See issue: https://github.com/agamm/comeback/issues/43
@@ -82,7 +82,7 @@ def test_is_plugin_exists():
 #     runner = CliRunner()
 #     result = runner.invoke(main.run, ['mock', 'value=321'])
 #     assert (result.exit_code == 0)
-#     assert ("321" in result.stdout)
+#     assert ('321' in result.stdout)
 #
 #     with pytest.raises(ModuleNotFoundError):
 #         runner.invoke(main.run, ['__NOPLUGINNAMEDLIKETHIS__', 'r=312'],
@@ -94,15 +94,15 @@ def test_is_plugin_exists():
 #
 #     result = runner.invoke(main.run, ['mock'])
 #     assert (result.exit_code == 0)
-#     assert ("expected str" in result.output)
+#     assert ('expected str' in result.output)
 #
 #     result = runner.invoke(main.run, ['mock', 'value=test'])
 #     assert (result.exit_code == 0)
-#     assert ("we got a test string" in result.stdout)
+#     assert ('we got a test string' in result.stdout)
 #
 #     result = runner.invoke(main.run, [])
 #     assert (result.exit_code == 2)
-#     assert ('Missing argument "PLUGIN"' in result.stdout)
+#     assert ('Missing argument 'PLUGIN'' in result.stdout)
 #
 #
 # def test_comeback_file_mock(tmp_path):
@@ -115,8 +115,8 @@ def test_is_plugin_exists():
 #
 #         result = runner.invoke(main.cli, '-v')
 #         assert (result.exit_code == 0)
-#         assert ("Successfully" in result.stdout)
-#         assert ("b'wowow\\n'" in result.stdout)
+#         assert ('Successfully' in result.stdout)
+#         assert ('b'wowow\\n'' in result.stdout)
 #
 #
 # def test_comeback_file_noplugin(tmp_path):
@@ -129,7 +129,7 @@ def test_is_plugin_exists():
 #
 #         result = runner.invoke(main.cli, '-v')
 #         assert (result.exit_code == 0)
-#         assert ("Unknown plugin" in result.stdout)
+#         assert ('Unknown plugin' in result.stdout)
 #
 #
 # def test_comeback_file_bad_yaml(tmp_path):
@@ -137,11 +137,11 @@ def test_is_plugin_exists():
 #     with runner.isolated_filesystem():
 #         paths.CURRENT_DIR = pathlib.Path(os.getcwd())  # Fixes the isolated fs
 #         with open('.comeback', 'w') as f:
-#             f.write("p:\n231\n")
+#             f.write('p:\n231\n')
 #
 #         result = runner.invoke(main.cli, '-v')
 #         assert (result.exit_code == 0)
-#         assert ("YAML Error" in result.output)
+#         assert ('YAML Error' in result.output)
 #
 #
 # def test_comeback_file_already_exists_comeback_file(tmp_path):
@@ -154,7 +154,7 @@ def test_is_plugin_exists():
 #
 #         result = runner.invoke(main.cli, '-v --init')
 #         assert (result.exit_code == 0)
-#         assert ("file already exists here" in result.stdout)
+#         assert ('file already exists here' in result.stdout)
 #
 #
 # def test_comeback_subcommand(tmp_path):
@@ -162,5 +162,5 @@ def test_is_plugin_exists():
 #
 #     result = runner.invoke(main.cli, ['-v', 'run', 'mock', 'value=123'])
 #     assert (result.exit_code == 0)
-#     assert ("Invoking subcommand" in result.output)
-#     assert ("b'123\\n'" in result.stdout)
+#     assert ('Invoking subcommand' in result.output)
+#     assert ('b'123\\n'' in result.stdout)

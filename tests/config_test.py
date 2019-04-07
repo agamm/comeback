@@ -10,12 +10,12 @@ import comeback.config as config
 
 # TODO: See issue: https://github.com/agamm/comeback/issues/43
 # def test_create_path_entity():
-#     pe = config.create_path_entity("test")
+#     pe = config.create_path_entity('test')
 #     last_used = int(
 #         time.time())  # this may be undeterministic, consider removing
 #     assert (pe == {'test': last_used})
 #
-#     pe = config.create_path_entity(pathlib.Path("testpath"))
+#     pe = config.create_path_entity(pathlib.Path('testpath'))
 #     last_used = int(
 #         time.time())  # this may be undeterministic, consider removing
 #     assert (pe == {'testpath': last_used})
