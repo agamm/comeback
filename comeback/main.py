@@ -121,7 +121,7 @@ def load_config(config_path: Optional[pathlib.Path] = None) -> None:
     if not config_path:
         config_path = get_config_path()
 
-    config = read_config_file(config_path.name)
+    config = read_config_file(config_path)
 
     if config is None:
         verbose_echo(
