@@ -13,12 +13,12 @@ import comeback.config as config
 #     path_entity = config.create_path_entity('test')
 #     last_used = int(
 #         time.time())  # this may be undeterministic, consider removing
-#     assert (path_entity == {'test': last_used})
+#     assert path_entity == {'test': last_used}
 #
 #     path_entity = config.create_path_entity(pathlib.Path('testpath'))
 #     last_used = int(
 #         time.time())  # this may be undeterministic, consider removing
-#     assert (path_entity == {'testpath': last_used})
+#     assert path_entity == {'testpath': last_used}
 #
 #
 # def test_add_comeback_path():
@@ -29,5 +29,5 @@ import comeback.config as config
 #
 #     cb_path.touch()
 #     config.add_comeback_path(cb_path)
-#     assert(str(cb_path) in config.get_comeback_paths())
+#     assert str(cb_path) in config.get_comeback_paths()
 #     os.remove(str(cb_path))
