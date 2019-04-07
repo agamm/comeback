@@ -25,13 +25,17 @@ def get_probable_project_name() -> str:
     return paths.CURRENT_DIR.name
 
 
-def parse_args(args: Optional[str]) -> Dict[str, str]:
+def parse_args(args: Optional[str] = None) -> Dict[str, str]:
     if not args:
         return {}
 
     parsed_args = {}
     for arg in args.split(','):
         key_value = arg.split('=')
+        if len(key_value) < 2:
+            raise ValueError(
+                'There was no assignment supplied to args' +
+                ' (ie should look like param=value,param2=value2')
         parsed_args[key_value[0]] = key_value[1]
 
     return parsed_args
@@ -66,7 +70,7 @@ def is_plugin_exists(plugin_name: str) -> bool:
 def load_plugin(plugin_name: str, plugin_params: Dict[str, Any]) -> None:
     if not plugin_name:
         click.echo(f'Can\'t load a plugin without a plugin name')
-        exit()
+        exit(1)
 
     # Fix plugins that don't require params
     if not plugin_params:
@@ -95,7 +99,7 @@ def read_config_file(config_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     except IOError as e:
         click.echo(f'Could not read file {config_path} because {e}')
     except yaml.YAMLError as exc:
-        click.echo(exc)
+        click.echo('YAML Error: ' + str(exc))
     return None
 
 
@@ -106,6 +110,7 @@ def get_config_path() -> pathlib.Path:
         return cwd_path
 
     last_comeback_used = config.get_last_comeback()
+
     verbose_echo('No .comeback file found in the current directory, ' +
                  f'starting last session found ({last_comeback_used})')
     return last_comeback_used
@@ -113,7 +118,6 @@ def get_config_path() -> pathlib.Path:
 
 def load_config(config_path: Optional[pathlib.Path] = None) -> None:
     verbose_echo(f'Loading configuration file form: {paths.CURRENT_DIR}')
-
     if not config_path:
         config_path = get_config_path()
 
@@ -156,7 +160,7 @@ def get_last_used() -> List[Dict[str, Any]]:
 
 def list_last_used() -> Tuple[List[Dict[str, Any]], str]:
     sorted_last_used = get_last_used()
-    sorted_last_str = ""
+    sorted_last_str = ''
     for index, recipe in enumerate(sorted_last_used):
         sorted_last_str += f'{index + 1} - {recipe["path"]} \n'
 
@@ -167,10 +171,10 @@ def choose_last_used() -> None:
     click.echo('Please choose one of the following .comeback recipes:')
     last_used, last_used_str = list_last_used()
     click.echo(last_used_str)
-    index = int(input("> "))
-    path = last_used[index - 1]['path']
-    load_config(path)
-    config.add_comeback_path(path)
+    index = int(input('> '))  # pragma: no cover
+    path = last_used[index - 1]['path']  # pragma: no cover
+    load_config(path)  # pragma: no cover
+    config.add_comeback_path(path)  # pragma: no cover
 
 
 @click.group(invoke_without_command=True)
@@ -195,7 +199,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
 
     if last_used:
         choose_last_used()
-        return
+        return  # pragma: no cover
 
     main()
 

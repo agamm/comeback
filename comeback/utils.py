@@ -4,7 +4,7 @@ import platform
 import shlex
 import subprocess
 from shutil import which
-from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 RUN_STATUS = Tuple[bool, Optional[str]]
@@ -48,7 +48,6 @@ def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> None:
 
     subprocess.Popen(cmd, shell=use_shell, **kwargs)
 
-
 def is_binary_exists(bin_name: str) -> bool:
     return which(bin_name) is not None
 
@@ -56,12 +55,6 @@ def is_binary_exists(bin_name: str) -> bool:
 def is_module_exists(module_name: str) -> bool:
     spec = importlib.util.find_spec(module_name)
     return spec is not None
-
-
-def get_dirs_in_dir(dirpath: str) -> Iterator[pathlib.Path]:
-    """Returns 1st level of dirs in a path"""
-    all_files = pathlib.Path(dirpath).glob('*')
-    return filter(pathlib.Path.is_dir, all_files)
 
 
 def read_file(path: pathlib.Path) -> str:
@@ -73,7 +66,7 @@ def read_file(path: pathlib.Path) -> str:
     return data
 
 
-def report_issue() -> str:
+def report_issue() -> str:  # pragma: no cover
     """Used when errors are really f*cked up"""
-    return ('Report an issue please?'
+    return ('Report an issue please? '
             '( https://github.com/agamm/comeback/issues )')
