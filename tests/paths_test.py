@@ -13,6 +13,7 @@ def create_tmp_env_xdg(is_data=True):
     test_xdg_path = pathlib.Path.home() / path
     backup_data = os.getenv('XDG_DATA_HOME')
     backup_config = os.getenv('XDG_CONFIG_HOME')
+
     if is_data:
         os.environ['XDG_DATA_HOME'] = str(test_xdg_path)
     else:
