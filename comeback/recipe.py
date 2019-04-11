@@ -1,11 +1,11 @@
-import json
 import click
+import json
 import pathlib
-
 from typing import Any, Dict, Optional, List
-from comeback import paths
+
 from comeback import config
 from comeback.plugins import manager
+from comeback import paths
 from comeback.utils import verbose_echo
 
 RECIPE_FILENAME = ".comeback"

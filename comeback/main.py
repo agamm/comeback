@@ -1,14 +1,13 @@
+import click
 import pathlib
 import sys
 from typing import Any, Dict, Optional, Tuple, List
 
-import click
-
 from comeback import config
-from comeback import utils
 from comeback import paths
 from comeback.plugins import manager
 from comeback import recipe
+from comeback import utils
 from comeback.utils import verbose_echo
 
 exit = sys.exit
