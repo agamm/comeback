@@ -8,7 +8,7 @@ from comeback.plugins import manager
 from comeback import paths
 from comeback.utils import verbose_echo
 
-RECIPE_FILENAME = ".comeback"
+FILENAME = ".comeback"
 
 
 def read_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
@@ -35,9 +35,9 @@ def run(recipe: List[Dict[str, Any]]) -> None:
             manager.call(plugin, **plugin_params)
 
 
-def create_file() -> pathlib.Path:
+def create() -> pathlib.Path:
     verbose_echo('Creating a blank .comeback configuration file.')
-    path = paths.CURRENT_DIR / RECIPE_FILENAME
+    path = paths.CURRENT_DIR / FILENAME
     if path.exists():
         verbose_echo('.comeback file already exists here. Will only touch it.')
     path.touch()
@@ -46,7 +46,7 @@ def create_file() -> pathlib.Path:
 
 
 def get_path() -> pathlib.Path:
-    cwd_path = paths.CURRENT_DIR / RECIPE_FILENAME
+    cwd_path = paths.CURRENT_DIR / FILENAME
     if cwd_path.exists():
         config.add_comeback_path(cwd_path)
         return cwd_path

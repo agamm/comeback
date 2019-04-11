@@ -34,7 +34,7 @@ def parse_args(args: Optional[str] = None) -> Dict[str, str]:
 
 
 def get_config_path() -> pathlib.Path:
-    cwd_path = paths.CURRENT_DIR / recipe.RECIPE_FILENAME
+    cwd_path = paths.CURRENT_DIR / recipe.FILENAME
     if cwd_path.exists():
         config.add_comeback_path(cwd_path)
         return cwd_path
@@ -97,7 +97,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
         return
 
     if init:
-        recipe.create_file()
+        recipe.create()
         return
 
     if last_used:
