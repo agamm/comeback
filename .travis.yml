@@ -4,4 +4,4 @@ python:
 install:
   - 'pip install pipenv'
   - 'pipenv sync'
-script: 'pytest'
+script: 'pytest --fixtures'
