@@ -1,7 +1,8 @@
-import click
 import pathlib
 import sys
 from typing import Any, Dict, Optional, Tuple, List
+
+import click
 
 from comeback import config
 from comeback import paths
