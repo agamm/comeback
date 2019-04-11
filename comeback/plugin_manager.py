@@ -8,7 +8,7 @@ from comeback import plugins
 from comeback.utils import verbose_echo
 
 
-def call_plugin(module: ModuleType, plugin_name: str,
+def call_plugin(module: ModuleType,
                 **plugin_params: Dict[str, Any]) -> None:
     success = False
     err = None
@@ -16,15 +16,15 @@ def call_plugin(module: ModuleType, plugin_name: str,
         success, err = module.run_plugin(**plugin_params)
     except TypeError as e:
         click.echo(
-            f'There was a problem executing the plugin {plugin_name}: {e}')
+            f'There was a problem executing the plugin {module.__name__}: {e}')
         exit()
 
     if not success:
         click.echo(
-            f'There was a problem executing the plugin {plugin_name}: {err}')
+            f'There was a problem executing the plugin {module.__name__}: {err}')
         exit()
 
-    verbose_echo(f'Successfully started {plugin_name}!')
+    verbose_echo(f'Successfully started {module.__name__}!')
 
 
 def does_plugin_exists(plugin_name: str) -> bool:
@@ -36,15 +36,10 @@ def does_plugin_exists(plugin_name: str) -> bool:
     return is_plugin_found
 
 
-def load_plugin(plugin_name: str, plugin_params: Dict[str, Any]) -> None:
+def load_plugin(plugin_name: str) -> ModuleType:
     if not plugin_name:
         click.echo(f'Can\'t load a plugin without a plugin name')
         exit(1)
 
-    # Fix plugins that don't require params
-    if not plugin_params:
-        plugin_params = {}
-
     importer = f'{plugins.__name__}.{plugin_name}.main'
-    m = importlib.import_module(importer)
-    call_plugin(m, plugin_name, **plugin_params)
+    return importlib.import_module(importer)

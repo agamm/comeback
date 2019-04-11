@@ -2,10 +2,13 @@ import os
 import pathlib
 from typing import NamedTuple
 
+from comeback.recipe_manager import RECIPE_FILENAME
 
 # The XDG is a standard that helps declutter the user's home directory
 # from configuration and data files.
 # https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+
+
 class XdgPath(NamedTuple):
     name: str
     xdg_variable_name: str
@@ -43,7 +46,7 @@ def get_data_path(**kwargs: str) -> pathlib.Path:
 
 
 def get_default_comeback_file_path() -> pathlib.Path:
-    return pathlib.Path.home() / '.comeback'
+    return pathlib.Path.home() / RECIPE_FILENAME
 
 
 DEFAULT_COMEBACK_FILE = get_default_comeback_file_path()
