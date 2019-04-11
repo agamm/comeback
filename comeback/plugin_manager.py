@@ -1,8 +1,8 @@
-import click
 import importlib
-
 from types import ModuleType
 from typing import Any, Dict
+
+import click
 
 from comeback import plugins
 from comeback.utils import verbose_echo
@@ -10,8 +10,6 @@ from comeback.utils import verbose_echo
 
 def call(module: ModuleType,
          **plugin_params: Dict[str, Any]) -> None:
-    success = False
-    err = None
     try:
         success, err = module.run_plugin(**plugin_params)
     except TypeError as e:
@@ -19,7 +17,8 @@ def call(module: ModuleType,
 
     if not success:
         click.echo(
-            f'There was a problem executing the plugin {module.__name__}: {err}')
+            'There was a problem executing the plugin' +
+            f' {module.__name__}: {err}')
         exit(-1)
 
     verbose_echo(f'Successfully started {module.__name__}!')

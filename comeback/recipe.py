@@ -1,7 +1,8 @@
-import click
 import json
 import pathlib
 from typing import Any, Dict, Optional, List
+
+import click
 
 from comeback import config, plugin_manager
 from comeback import paths
