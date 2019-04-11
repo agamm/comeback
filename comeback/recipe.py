@@ -22,17 +22,21 @@ def read_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     return None
 
 
+def run_step(step_dict):
+    for plugin_name, plugin_params in step_dict.items():
+        if not plugin_manager.does_exists(plugin_name):
+            exit(-1)
+
+        verbose_echo(f'Starting {plugin_name}...')
+        verbose_echo(f'\tParams {plugin_params}...')
+
+        plugin = plugin_manager.load(plugin_name)
+        plugin_manager.call(plugin, **plugin_params)
+
+
 def run(recipe: List[Dict[str, Any]]) -> None:
-    for plugin_dict in recipe:
-        for plugin_name, plugin_params in plugin_dict.items():
-            if not plugin_manager.does_exists(plugin_name):
-                exit(-1)
-
-            verbose_echo(f'Starting {plugin_name}...')
-            verbose_echo(f'\tParams {plugin_params}...')
-
-            plugin = plugin_manager.load(plugin_name)
-            plugin_manager.call(plugin, **plugin_params)
+    for step_dict in recipe:
+        run_step(step_dict)
 
 
 def create() -> pathlib.Path:
