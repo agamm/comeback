@@ -7,7 +7,7 @@ from comeback import config, plugin_manager
 from comeback import paths
 from comeback.utils import verbose_echo
 
-FILENAME = ".comeback"
+FILENAME = '.comeback'
 
 
 def read_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
