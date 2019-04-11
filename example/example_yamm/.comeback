@@ -1,6 +1,12 @@
-ipython:
-  modules:
-    - pathlib
-    - random
-    - this
-    - typing
+[  
+   {  
+      "ipython":{  
+         "modules":[  
+            "pathlib",
+            "random",
+            "this",
+            "typing"
+         ]
+      }
+   }
+]

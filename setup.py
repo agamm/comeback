@@ -16,7 +16,6 @@ setup(
     license='MIT',
     install_requires=[
         'click',
-        'pyyaml',
     ],
     entry_points={
         'console_scripts': ['comeback=comeback.main:cli'],
