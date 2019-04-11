@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional, Tuple, List
 
 from comeback import config
 from comeback import paths
-from comeback.plugins import manager
+from comeback import plugin_manager
 from comeback import recipe
 from comeback import utils
 from comeback.utils import verbose_echo
@@ -112,8 +112,8 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
 @click.argument('plugin_params', required=False)
 def run(plugin: str, plugin_params: str) -> None:
     verbose_echo(f'Running plugins: {plugin} with args: {plugin_params}')
-    module = manager.load(plugin)
-    manager.call(module, **parse_args(plugin_params))
+    module = plugin_manager.load(plugin)
+    plugin_manager.call(module, **parse_args(plugin_params))
 
 
 if __name__ == '__main__':

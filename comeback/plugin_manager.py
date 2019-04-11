@@ -15,14 +15,12 @@ def call(module: ModuleType,
     try:
         success, err = module.run_plugin(**plugin_params)
     except TypeError as e:
-        click.echo(
-            f'There was a problem executing the plugin {module.__name__}: {e}')
-        exit()
+        success, err = False, str(e)
 
     if not success:
         click.echo(
             f'There was a problem executing the plugin {module.__name__}: {err}')
-        exit()
+        exit(-1)
 
     verbose_echo(f'Successfully started {module.__name__}!')
 
