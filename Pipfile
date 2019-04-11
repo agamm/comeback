@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pytest-sugar = "*"
+comeback = {editable = true,path = "."}
+pytest-cov = "*"
 
 [packages]
 click = "*"

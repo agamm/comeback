@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Tuple, List
 
 import click
 
-from comeback import config
+from comeback import config, utils
 from comeback import paths
 from comeback import plugin_manager
 from comeback import recipe_manager
@@ -91,8 +91,7 @@ def choose_last_used() -> None:
                                                       '.comeback recipes.')
 def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
         -> None:
-    global IS_VERBOSE
-    IS_VERBOSE = verbose
+    utils.IS_VERBOSE = verbose
 
     if ctx.invoked_subcommand is not None:
         verbose_echo('Invoking subcommand: %s' % ctx.invoked_subcommand)

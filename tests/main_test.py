@@ -1,13 +1,9 @@
-import importlib
-import os
-
 import pytest
-import yaml
 from click.testing import CliRunner
 import comeback.main as main
 import pathlib
-from comeback import plugins
-from comeback import paths
+
+from comeback import plugin_manager
 
 
 def test_help_message():
@@ -47,7 +43,7 @@ def test_no_comeback_verbose():
     result = runner.invoke(main.cli, ['-v'])
     assert result.exit_code == 0
     assert 'Starting ' in result.output
-    assert 'Loading configuration file form: ' in result.output
+    assert 'Loading recipe ululation file from' in result.output
     assert ('Error: no .comeback file found in the ' +
             'current directory nor in previous sessions.' in result.output)
 
@@ -72,9 +68,9 @@ def test_init():
     pathlib.Path('./.comeback').unlink()
 
 
-def test_is_plugin_exists():
-    assert main.is_plugin_exists('mock')
-    assert not main.is_plugin_exists('__NOPLUGINNAMEDLIKETHIS__')
+def test_does_plugin_exists():
+    assert plugin_manager.does_plugin_exists('mock')
+    assert not plugin_manager.does_plugin_exists('__NOPLUGINNAMEDLIKETHIS__')
 
 
 # TODO: See issue: https://github.com/agamm/comeback/issues/43

@@ -59,7 +59,7 @@ def get_recipe_path() -> pathlib.Path:
 
 
 def load_recipe(recipe_path: Optional[pathlib.Path] = None) -> None:
-    verbose_echo(f'Loading recipe ululation file form: {paths.CURRENT_DIR}')
+    verbose_echo(f'Loading recipe ululation file from: {paths.CURRENT_DIR}')
     if not recipe_path:
         recipe_path = get_recipe_path()
 
