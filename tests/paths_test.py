@@ -1,11 +1,8 @@
 import os
 
 import pytest
-from click.testing import CliRunner
-import comeback.main as main
 import pathlib
 from comeback import paths
-from tests import test_helper
 
 
 def create_tmp_env_xdg(is_data=True):

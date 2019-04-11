@@ -1,4 +1,5 @@
 import importlib
+import click
 import pathlib
 import platform
 import shlex
@@ -6,9 +7,14 @@ import subprocess
 from shutil import which
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-
 RUN_STATUS = Tuple[bool, Optional[str]]
 CMD_PARAMS = Union[List[str], str]
+IS_VERBOSE = False
+
+
+def verbose_echo(msg: str) -> None:
+    if IS_VERBOSE:
+        click.echo(msg)
 
 
 def get_platform() -> str:
@@ -48,6 +54,7 @@ def run(cmd: CMD_PARAMS, use_shell: bool = False, detach: bool = True) -> None:
 
     subprocess.Popen(cmd, shell=use_shell, **kwargs)
 
+
 def is_binary_exists(bin_name: str) -> bool:
     return which(bin_name) is not None
 
@@ -59,10 +66,8 @@ def is_module_exists(module_name: str) -> bool:
 
 def read_file(path: pathlib.Path) -> str:
     """Read a file should be a pathlib Path object"""
-    data = ''
     with path.open('r') as f:
         data = f.read()
-
     return data
 
 

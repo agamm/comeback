@@ -21,11 +21,19 @@ If it takes you an average of 2 minutes to open all of your project's tools, the
 
 ## Example
 1) In the project directory, we have `.comeback` recipe:
-```yaml
-vscode: 
-  cwd: ~/dev/myproject
-chrome:
-  url: http://localhost:8080/
+```json
+[  
+   {  
+      "vscode": {  
+         "cwd": "~/dev/myproject"
+      }
+   },
+   {  
+      "chrome": {  
+         "url": "http://localhost:8080/"
+      }
+   }
+]
 ```
 2) Open a terminal in the project dir and run `comeback`  
 > *This .comeback recipe will open vscode in the `~/dev/myproject` path, and open chrome at the `http://localhost:8080/` url.*

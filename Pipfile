@@ -6,11 +6,12 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pytest-sugar = "*"
+comeback = {editable = true,path = "."}
+pytest-cov = "*"
 
 [packages]
 click = "*"
 comeback = {editable = true,path = "."}
-pyyaml = ">=4.2b1"
 
 [requires]
 python_version = "3.6"
