@@ -1,12 +1,12 @@
 [  
    {  
-      "vscode":{  
-         "cwd":"~/dev/myproject"
+      "vscode": {
+         "cwd": "~/dev/myproject"
       }
    },
    {  
-      "chrome":{  
-         "url":"http://localhost:8080/"
+      "chrome": {
+         "url": "http://localhost:8080/"
       }
    }
 ]

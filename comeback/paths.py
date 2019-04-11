@@ -2,7 +2,7 @@ import os
 import pathlib
 from typing import NamedTuple
 
-from comeback.recipe_manager import RECIPE_FILENAME
+from comeback.recipe import RECIPE_FILENAME
 
 # The XDG is a standard that helps declutter the user's home directory
 # from configuration and data files.

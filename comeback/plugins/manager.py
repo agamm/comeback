@@ -8,8 +8,8 @@ from comeback import plugins
 from comeback.utils import verbose_echo
 
 
-def call_plugin(module: ModuleType,
-                **plugin_params: Dict[str, Any]) -> None:
+def call(module: ModuleType,
+         **plugin_params: Dict[str, Any]) -> None:
     success = False
     err = None
     try:
@@ -27,7 +27,7 @@ def call_plugin(module: ModuleType,
     verbose_echo(f'Successfully started {module.__name__}!')
 
 
-def does_plugin_exists(plugin_name: str) -> bool:
+def does_exists(plugin_name: str) -> bool:
     all_plugins = plugins.__all__
     is_plugin_found = plugin_name in all_plugins
     if not is_plugin_found:
@@ -36,7 +36,7 @@ def does_plugin_exists(plugin_name: str) -> bool:
     return is_plugin_found
 
 
-def load_plugin(plugin_name: str) -> ModuleType:
+def load(plugin_name: str) -> ModuleType:
     if not plugin_name:
         click.echo(f'Can\'t load a plugin without a plugin name')
         exit(1)

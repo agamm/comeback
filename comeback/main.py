@@ -4,11 +4,11 @@ from typing import Any, Dict, Optional, Tuple, List
 
 import click
 
-from comeback import config, utils
+from comeback import config
+from comeback import utils
 from comeback import paths
-from comeback import plugin_manager
-from comeback import recipe_manager
-from comeback.recipe_manager import RECIPE_FILENAME
+from comeback.plugins import manager
+from comeback import recipe
 from comeback.utils import verbose_echo
 
 exit = sys.exit
@@ -35,7 +35,7 @@ def parse_args(args: Optional[str] = None) -> Dict[str, str]:
 
 
 def get_config_path() -> pathlib.Path:
-    cwd_path = paths.CURRENT_DIR / RECIPE_FILENAME
+    cwd_path = paths.CURRENT_DIR / recipe.RECIPE_FILENAME
     if cwd_path.exists():
         config.add_comeback_path(cwd_path)
         return cwd_path
@@ -50,7 +50,7 @@ def get_config_path() -> pathlib.Path:
 def main() -> None:
     probable_project_name = get_probable_project_name()
     click.echo(f'Starting {probable_project_name}\'s comeback...')
-    recipe_manager.load_recipe()
+    recipe.load()
 
 
 def get_last_used() -> List[Dict[str, Any]]:
@@ -78,7 +78,7 @@ def choose_last_used() -> None:
     click.echo(last_used_str)
     index = int(input('> '))  # pragma: no cover
     path = last_used[index - 1]['path']  # pragma: no cover
-    recipe_manager.load_recipe(path)  # pragma: no cover
+    recipe.load(path)  # pragma: no cover
     config.add_comeback_path(path)  # pragma: no cover
 
 
@@ -98,7 +98,7 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
         return
 
     if init:
-        recipe_manager.create_recipe_file()
+        recipe.create_file()
         return
 
     if last_used:
@@ -113,8 +113,8 @@ def cli(ctx: click.Context, init: bool, verbose: bool, last_used: bool) \
 @click.argument('plugin_params', required=False)
 def run(plugin: str, plugin_params: str) -> None:
     verbose_echo(f'Running plugins: {plugin} with args: {plugin_params}')
-    module = plugin_manager.load_plugin(plugin)
-    plugin_manager.call_plugin(module, **parse_args(plugin_params))
+    module = manager.load(plugin)
+    manager.call(module, **parse_args(plugin_params))
 
 
 if __name__ == '__main__':

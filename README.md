@@ -24,13 +24,13 @@ If it takes you an average of 2 minutes to open all of your project's tools, the
 ```json
 [  
    {  
-      "vscode":{  
-         "cwd":"~/dev/myproject"
+      "vscode": {  
+         "cwd": "~/dev/myproject"
       }
    },
    {  
-      "chrome":{  
-         "url":"http://localhost:8080/"
+      "chrome": {  
+         "url": "http://localhost:8080/"
       }
    }
 ]

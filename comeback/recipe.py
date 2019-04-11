@@ -5,13 +5,13 @@ import pathlib
 from typing import Any, Dict, Optional, List
 from comeback import paths
 from comeback import config
-from comeback import plugin_manager
+from comeback.plugins import manager
 from comeback.utils import verbose_echo
 
 RECIPE_FILENAME = ".comeback"
 
 
-def read_recipe_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
+def read_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     try:
         with open(recipe_path, 'r') as fd:
             return json.load(fd)
@@ -22,20 +22,20 @@ def read_recipe_file(recipe_path: pathlib.Path) -> Optional[Dict[str, Any]]:
     return None
 
 
-def run_recipe(recipe: List[Dict[str, Any]]) -> None:
+def run(recipe: List[Dict[str, Any]]) -> None:
     for plugin_dict in recipe:
         for plugin_name, plugin_params in plugin_dict.items():
-            if not plugin_manager.does_plugin_exists(plugin_name):
+            if not manager.does_exists(plugin_name):
                 exit()
 
             verbose_echo(f'Starting {plugin_name}...')
             verbose_echo(f'\tParams {plugin_params}...')
 
-            plugin = plugin_manager.load_plugin(plugin_name)
-            plugin_manager.call_plugin(plugin, **plugin_params)
+            plugin = manager.load(plugin_name)
+            manager.call(plugin, **plugin_params)
 
 
-def create_recipe_file() -> pathlib.Path:
+def create_file() -> pathlib.Path:
     verbose_echo('Creating a blank .comeback configuration file.')
     path = paths.CURRENT_DIR / RECIPE_FILENAME
     if path.exists():
@@ -45,7 +45,7 @@ def create_recipe_file() -> pathlib.Path:
     return path
 
 
-def get_recipe_path() -> pathlib.Path:
+def get_path() -> pathlib.Path:
     cwd_path = paths.CURRENT_DIR / RECIPE_FILENAME
     if cwd_path.exists():
         config.add_comeback_path(cwd_path)
@@ -58,12 +58,12 @@ def get_recipe_path() -> pathlib.Path:
     return last_comeback_used
 
 
-def load_recipe(recipe_path: Optional[pathlib.Path] = None) -> None:
+def load(recipe_path: Optional[pathlib.Path] = None) -> None:
     verbose_echo(f'Loading recipe ululation file from: {paths.CURRENT_DIR}')
     if not recipe_path:
-        recipe_path = get_recipe_path()
+        recipe_path = get_path()
 
-    recipe = read_recipe_file(recipe_path)
+    recipe = read_file(recipe_path)
 
     if recipe is None:
         verbose_echo(
@@ -71,4 +71,4 @@ def load_recipe(recipe_path: Optional[pathlib.Path] = None) -> None:
             'previous sessions.')
         return None
 
-    run_recipe(recipe)
+    run(recipe)

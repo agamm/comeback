@@ -3,7 +3,7 @@ from click.testing import CliRunner
 import comeback.main as main
 import pathlib
 
-from comeback import plugin_manager
+from comeback.plugins import manager
 
 
 def test_help_message():
@@ -69,8 +69,8 @@ def test_init():
 
 
 def test_does_plugin_exists():
-    assert plugin_manager.does_plugin_exists('mock')
-    assert not plugin_manager.does_plugin_exists('__NOPLUGINNAMEDLIKETHIS__')
+    assert manager.does_exists('mock')
+    assert not manager.does_exists('__NOPLUGINNAMEDLIKETHIS__')
 
 
 # TODO: See issue: https://github.com/agamm/comeback/issues/43
