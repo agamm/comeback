@@ -4,7 +4,7 @@ from typing import Optional
 from comeback import utils
 
 
-def check_plugin(cwd: str = None) -> utils.RUN_STATUS:
+def check_plugin(cwd: Optional[str] = None) -> utils.RUN_STATUS:
     """Test if we can use this plugin"""
     if cwd is None:
         return False, 'cwd parameter is not set.'
@@ -13,12 +13,12 @@ def check_plugin(cwd: str = None) -> utils.RUN_STATUS:
     return True, None
 
 
-def run_windows(cwd: str) -> utils.RUN_STATUS:
-    pass
+def run_windows(cwd: Optional[str]) -> utils.RUN_STATUS:
+    raise NotImplementedError()
 
 
-def run_linux(cwd: str) -> utils.RUN_STATUS:
-    pass
+def run_linux(cwd: Optional[str]) -> utils.RUN_STATUS:
+    raise NotImplementedError()
 
 
 def run_mac(cwd: str) -> utils.RUN_STATUS:
